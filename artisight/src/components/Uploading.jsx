@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useCallback } from 'react';
 import { CheckCircle } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
+import { cameraImage } from '../assets';
 
 const Uploading = () => {
     const [file, setFile] = useState(null);
@@ -68,7 +69,7 @@ const Uploading = () => {
                 {uploaded ? (
                     <img src={URL.createObjectURL(file)} alt="Uploaded Image" className='text-center rounded-xl' />
                 ) : (
-                    <img src='./assets/6.webp' alt="Upload Illustration" className='text-center rounded-xl' />
+                    <img src={cameraImage} alt="Upload Illustration" className='text-center rounded-xl' />
                 )}
             </div>
             <div className="text-left flex flex-col sm:p-8 pt-8 w-full md:w-1/2 lg:w-2/5">

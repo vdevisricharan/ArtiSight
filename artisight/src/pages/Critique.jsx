@@ -1,12 +1,14 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Feedback from '../components/Feedback'
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Feedback from '../components/Feedback';
+import Footer from  '../components/Footer';
 
 const Critique = () => {
   return (
     <div>
-        <Navbar/>
-        <Feedback/>
+      <Navbar />
+      <Feedback />
+      <Footer />
     </div>
   )
 }

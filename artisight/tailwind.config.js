@@ -20,6 +20,9 @@ export default {
         sans: ['"Be Vietnam Pro"', 'sans-serif'],
         serif: ['Merriweather', 'serif'],
       },
+      backgroundImage: {
+        'hero': "url('assets/hero.jpg')",
+      },
     },
   },
   variants: {},
