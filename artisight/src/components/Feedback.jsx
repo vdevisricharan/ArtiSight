@@ -6,7 +6,7 @@ const Feedback = () => {
     <div className='flex flex-col lg:flex-row items-start justify-center p-8 lg:p-20'>
       <div className='flex flex-col items-center lg:items-start justify-center px-5 lg:px-10 w-full lg:w-1/2'>
         <h2 className="text-3xl font-bold mb-4 text-dark">Your photo</h2>
-        <img src="src/assets/16_wine-glass.jpg" alt="Wine Glass" className="rounded-xl mb-8 lg:mb-0" />
+        <img src="./assets/16_wine-glass.jpg" alt="Wine Glass" className="rounded-xl mb-8 lg:mb-0" />
       </div>
       <div className='flex flex-col items-center lg:items-start justify-center px-5 lg:px-10 w-full lg:w-1/2'>
         <h2 className="text-3xl font-bold text-dark">Critique</h2>

@@ -68,7 +68,7 @@ const Uploading = () => {
                 {uploaded ? (
                     <img src={URL.createObjectURL(file)} alt="Uploaded Image" className='text-center rounded-xl' />
                 ) : (
-                    <img src='src/assets/6.webp' alt="Upload Illustration" className='text-center rounded-xl' />
+                    <img src='./assets/6.webp' alt="Upload Illustration" className='text-center rounded-xl' />
                 )}
             </div>
             <div className="text-left flex flex-col sm:p-8 pt-8 w-full md:w-1/2 lg:w-2/5">
