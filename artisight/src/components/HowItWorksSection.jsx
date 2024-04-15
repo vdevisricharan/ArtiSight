@@ -1,5 +1,5 @@
 import React from 'react';
-import { howItWorks } from '../assets';
+import { howItWorks, howItWorks1, howItWorks2 } from '../assets';
 
 const HowItWorksSection = () => {
     return (
@@ -13,12 +13,12 @@ const HowItWorksSection = () => {
                     <p className='text-lg mt-4 text-gray-600 font-sans'>Choose a photo, Upload it and receive personalized feedback within minutes.</p>
                 </div>
                 <div className="w-full sm:w-1/3 text-left py-4">
-                    <img src={howItWorks} alt="Step 2" className="mx-auto rounded-2xl" />
+                    <img src={howItWorks1} alt="Step 2" className="mx-auto rounded-2xl" />
                     <p className="text-dark mt-4 font-bold text-xl font-sans">AI-powered feedback</p>
                     <p className='text-lg mt-4 text-gray-600 font-sans'>Our AI analyzes your work for composition, lighting, color, subject matter, and more.</p>
                 </div>
                 <div className="w-full sm:w-1/3 text-left py-4">
-                    <img src={howItWorks} alt="Step 3" className="mx-auto rounded-2xl" />
+                    <img src={howItWorks2} alt="Step 3" className="mx-auto rounded-2xl" />
                     <p className="text-dark mt-4 font-bold text-xl font-sans">Resources</p>
                     <p className='text-lg mt-4 text-gray-600 font-sans'>Search for resources like YouTube Tutorials, Blogs, Articles to level up your photography skills.</p>
                 </div>

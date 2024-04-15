@@ -1,14 +1,20 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
 import { CheckCircle } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { cameraImage } from '../assets';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUploadedImage, setCritique } from '../redux/imageSlice';
 
 const Uploading = () => {
     const [file, setFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploaded, setUploaded] = useState(false);
     const [fileError, setFileError] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const dispatch = useDispatch();
+    const uploadedImage = useSelector(state => state.image.uploadedImage);
+    const navigate = useNavigate(); 
 
     const handleDrag = useCallback((e) => {
         e.preventDefault();
@@ -43,7 +49,8 @@ const Uploading = () => {
             if (progress >= 100) {
                 clearInterval(interval);
                 setUploaded(true);
-                setUploadedImage(URL.createObjectURL(newFile));
+                const imageSrc = URL.createObjectURL(newFile);
+                dispatch(setUploadedImage(imageSrc));
             }
         }, 100);
     };
@@ -59,15 +66,39 @@ const Uploading = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (uploadedImage) {
+            setIsGenerating(true); 
+            const formData = new FormData();
+            formData.append('file', file); // Assuming `file` is stored in state after being selected
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(data.critique)
+                    dispatch(setCritique(data.critique));
+                    navigate('/feedback')
+                } else {
+                    console.error('Failed to upload image: ', data.error);
+                    setIsGenerating(false); 
+                }
+            } catch (error) {
+                console.error('Error making the request:', error);
+                setIsGenerating(false); 
+            }
+        }
     };
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-center m-10">
             <div className='md:flex justify-center items-center md:w-1/2'>
                 {uploaded ? (
-                    <img src={URL.createObjectURL(file)} alt="Uploaded Image" className='text-center rounded-xl' />
+                    <img src={uploadedImage} alt="Uploaded Image" className='text-center rounded-xl' />
                 ) : (
                     <img src={cameraImage} alt="Upload Illustration" className='text-center rounded-xl' />
                 )}
@@ -91,13 +122,12 @@ const Uploading = () => {
                         />
                         <p className='mt-4'>We support common image formats (JPEG, PNG, etc.) <br /> Maximum file size is 10MB.</p>
                         <div className="progress-bar bg-gray-200 rounded-full h-2.5 mt-4">
-                            <div className="bg-primary h-2.5 rounded-full" style={{ width: `${uploadProgress}%` }}></div> {/* Update width based on actual upload progress */}
+                            <div className="bg-primary h-2.5 rounded-full" style={{ width: `${uploadProgress}%` }}></div>
                         </div>
                         {!uploaded ? <p className='mt-4'>{uploadProgress}%</p> : <p className='mt-4 text-success flex gap-2'>{uploadProgress}%<CheckCircle size={24} /></p>}
-                        <Link to='/feedback'>
-                            <button type="submit" className="mt-5 w-full bg-primary text-white rounded-lg px-4 py-2 hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-purple-300">
-                                Get Critique
-                            </button></Link>
+                        <button type="submit" className={`mt-5 w-full bg-primary text-white rounded-lg px-4 py-2 hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-purple-300 ${isGenerating ? 'loading-animation' : ''}`}>
+                            {isGenerating ? 'Generating...':'Get Critique'}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -25,7 +25,6 @@ const Navbar = () => {
           isMenuOpen ? 'flex' : 'hidden'
         } absolute top-16 right-4 min-w-[140px] bg-white shadow-lg rounded-lg flex-col items-center sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:min-w-0 z-10`}>
         <a href="#how-it-works" className="text-gray-600 hover:text-dark transition duration-300 p-2 sm:p-4">How it works</a>
-        <a href="#pricing" className="text-gray-600 hover:text-dark transition duration-300 p-2 sm:p-4">Pricing</a>
         <a href="#examples" className="text-gray-600 hover:text-dark transition duration-300 p-2 sm:p-4">Examples</a>
         <a href="#help" className="text-gray-600 hover:text-dark transition duration-300 p-2 sm:p-4">Help</a>
         {/* <button className="bg-primary text-light px-3 py-2 rounded-xl m-2 hover:bg-secondary transition duration-300">Sign up</button>

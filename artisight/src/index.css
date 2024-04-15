@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.loading-animation {
+    opacity: 0.6;
+    pointer-events: none; /* Disable interaction while loading */
+    transition: opacity 0.3s ease;
+}

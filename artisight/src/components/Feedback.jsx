@@ -1,8 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { uploadedImage } from '../assets';
+
+// Custom hook to handle typing animation, modified to indicate completion
+function useTypingEffect(text, speed) {
+  const [typedText, setTypedText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    if (typedText.length === text.length) {
+      setIsComplete(true);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setTypedText(text.substring(0, typedText.length + 1));
+    }, speed);
+
+    return () => clearTimeout(timeoutId);
+  }, [text, typedText, speed]);
+
+  return [typedText, isComplete];
+}
 
 const Feedback = () => {
+  const uploadedImage = useSelector(state => state.image.uploadedImage);
+
+  const critique = useSelector(state => state.image.critique);
+
+  // Using the hook to get the animated critique text
+  const [animatedCritique, isTypingComplete]  = useTypingEffect(critique, 10); // Adjust speed as needed
+
   return (
     <div className='flex flex-col lg:flex-row items-start justify-center p-8 lg:p-20'>
       <div className='flex flex-col items-center lg:items-start justify-center px-5 lg:px-10 w-full lg:w-1/2'>
@@ -11,17 +39,12 @@ const Feedback = () => {
       </div>
       <div className='flex flex-col items-center lg:items-start justify-center px-5 lg:px-10 w-full lg:w-1/2'>
         <h2 className="text-3xl font-bold text-dark">Critique</h2>
-        <p className="mt-4 text-dark">The photo showcases a wine glass juxtaposed against a scenic background, with a sharp focus and blurred background. The lighting is natural and soft, but could be improved with post-processing. The wine's golden hue stands out against the cooler background tones, creating a captivating contrast.</p>
-        <h3 className="text-xl font-bold mt-4 mb-4 text-secondary">Suggestions for improvement</h3>
-        <ul className="list-disc pl-8 mb-4 text-dark">
-          <li className="mb-4">Slightly reframe the shot to give more space on the left side of the glass.</li>
-          <li className="mb-4">Adjust the horizon to be completely level for a balanced composition.</li>
-          <li className="mb-4">Increase the clarity of the background just slightly while maintaining the focus on the wine glass.</li>
-          <li>Enhance the image's contrast and color saturation in post-processing</li>
-        </ul>
-        <Link to='/'>
-          <button className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded focus:outline-none focus:ring-4 focus:ring-purple-300 transition-colors">Search Resources</button>
-        </Link>
+        <p className="mt-4 text-dark leading-loose">{animatedCritique}</p>
+        {isTypingComplete && (
+          <Link to='/upload'>
+            <button className="mt-4 bg-primary hover:bg-secondary text-white px-4 py-2 rounded focus:outline-none focus:ring-4 focus:ring-purple-300 transition-colors">Submit Another Photo</button>
+          </Link>
+        )}
       </div>
     </div>
   );
