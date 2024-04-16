@@ -74,7 +74,7 @@ const Uploading = () => {
             formData.append('file', file); // Assuming `file` is stored in state after being selected
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/upload', {
+                const response = await fetch('https://artisight.onrender.com/upload', {
                     method: 'POST',
                     body: formData,
                 });
