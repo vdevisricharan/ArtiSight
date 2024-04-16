@@ -12,6 +12,10 @@ API_KEY = os.getenv('API_KEY')
 genai.configure(api_key=API_KEY)
 
 @app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+# This is the route that will be called when the user uploads a file
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
