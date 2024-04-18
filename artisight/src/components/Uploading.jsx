@@ -80,7 +80,6 @@ const Uploading = () => {
                 });
                 const data = await response.json();
                 if (response.ok) {
-                    console.log(data.critique)
                     dispatch(setCritique(data.critique));
                     navigate('/feedback')
                 } else {

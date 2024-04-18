@@ -6,6 +6,7 @@ export const imageSlice = createSlice({
     initialState: {
         uploadedImage: null,
         critique: null,
+        suggestions: null,
     },
     reducers: {
         setUploadedImage: (state, action) => {
@@ -13,9 +14,12 @@ export const imageSlice = createSlice({
         },
         setCritique: (state, action) => {
             state.critique = action.payload;
+        },
+        setSuggestions: (state, action) => {
+            state.suggestions = action.payload;
         }
     },
 });
 
-export const { setUploadedImage, setCritique } = imageSlice.actions;
+export const { setUploadedImage, setCritique, setSuggestions} = imageSlice.actions;
 export default imageSlice.reducer;
