@@ -15,9 +15,14 @@ const Resources = () => {
         const fetchData = async () => {
             setLoading(true); // Start loading
             try {
-                const response = await axios.post('https://artisight.onrender.com/resources', { critique, suggestions });
+                const data = {
+                    critique: critique,
+                    suggestions: suggestions
+                }
+                // console.log(data);
+                const response = await axios.post('https://artisight.onrender.com/resources', data);
                 setResources(response.data.webResults);
-                console.log(resources);
+                // console.log(resources);
                 setLoading(false); // Stop loading after data is fetched
             } catch (error) {
                 console.error('Error fetching resources:', error);
@@ -31,7 +36,7 @@ const Resources = () => {
     }, [critique, suggestions]);
 
     return (
-        <div className="p-8 lg:p-20">
+        <div className="px-8 pb-8 lg:px-20 lg:pb-20">
             <div className='px-5 lg:px-10'>
                 <h2 className="text-3xl font-bold mb-4 text-dark">Resources</h2>
                 {loading ?
