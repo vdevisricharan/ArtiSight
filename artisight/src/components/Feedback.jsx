@@ -81,11 +81,8 @@ const Feedback = () => {
             <button onClick={() => setActiveTab('suggestions')} className={`text-lg font-bold ml-4 ${activeTab === 'suggestions' ? 'border-b-2 border-primary' : 'text-gray-500'}`}>Suggestions</button>
           </div>
 
-          {activeTab === 'feedback' && (
-            <div>
-              <ReactMarkdown className="mt-4 text-dark leading-loose">{animatedCritique}</ReactMarkdown>
-            </div>
-          )}
+          
+          
 
           {activeTab === 'suggestions' && (
             <div>
