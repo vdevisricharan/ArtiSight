@@ -24,7 +24,6 @@ function useTypingEffect(text, speed) {
 
   return [typedText, isComplete];
 }
-
 const Feedback = () => {
   const dispatch = useDispatch();
   const uploadedImage = useSelector(state => state.image.uploadedImage);
@@ -86,7 +85,6 @@ const Feedback = () => {
               <ReactMarkdown className="mt-4 text-dark leading-loose">{animatedCritique}</ReactMarkdown>
             </div>
           )}
-          
 
           {activeTab === 'suggestions' && (
             <div>
@@ -110,5 +108,4 @@ const Feedback = () => {
     </div>
   );
 };
-
 export default Feedback;

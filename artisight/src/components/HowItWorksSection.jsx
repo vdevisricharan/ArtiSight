@@ -1,6 +1,5 @@
 import React from 'react';
 import { howItWorks, howItWorks1, howItWorks2 } from '../assets';
-
 const HowItWorksSection = () => {
     return (
         <div className="container mx-auto px-8 py-20" id='how-it-works'>
@@ -26,5 +25,4 @@ const HowItWorksSection = () => {
         </div>
     );
 }
-
 export default HowItWorksSection;
