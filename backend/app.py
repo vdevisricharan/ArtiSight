@@ -89,7 +89,6 @@ def suggest_improvements():
         )
 
         return jsonify({'suggestions': response.text})
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -145,7 +144,6 @@ def get_resources():
         return jsonify({
             'webResults': top_results,
         })
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
