@@ -8,8 +8,6 @@ const Resources = () => {
     const suggestions = useSelector(state => state.image.suggestions);
     const [resources, setResources] = useState([]);
     const [loading, setLoading] = useState(false);
-    // console.log(critique);
-    // console.log(suggestions);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,10 +17,8 @@ const Resources = () => {
                     critique: critique,
                     suggestions: suggestions
                 }
-                // console.log(data);
                 const response = await axios.post('https://artisight.onrender.com/resources', data);
                 setResources(response.data.webResults);
-                // console.log(resources);
                 setLoading(false); // Stop loading after data is fetched
             } catch (error) {
                 console.error('Error fetching resources:', error);
@@ -58,5 +54,4 @@ const Resources = () => {
         </div>
     );
 };
-
 export default Resources;

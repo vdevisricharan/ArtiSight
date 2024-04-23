@@ -39,7 +39,7 @@ const Feedback = () => {
   const processSuggestions = (text) => {
     const lines = text.split('\n');
     if (lines[0].startsWith('**')) {
-      // Remove the first line if it's a heading
+
       lines.shift();
     }
     return lines.join('\n');
