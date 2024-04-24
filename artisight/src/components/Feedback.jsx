@@ -3,32 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSuggestions } from '../redux/imageSlice';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-<<<<<<< HEAD
 import Resources from './Resources';
 
-=======
-
-// Custom hook to handle typing animation, modified to indicate completion
-function useTypingEffect(text, speed) {
-  const [typedText, setTypedText] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    if (typedText.length === text.length) {
-      setIsComplete(true);
-      return;
-    }
-
-    const timeoutId = setTimeout(() => {
-      setTypedText(text.substring(0, typedText.length + 1));
-    }, speed);
-
-    return () => clearTimeout(timeoutId);
-  }, [text, typedText, speed]);
-
-  return [typedText, isComplete];
-}
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
 const Feedback = () => {
   const dispatch = useDispatch();
   const uploadedImage = useSelector(state => state.image.uploadedImage);
@@ -36,22 +12,7 @@ const Feedback = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [activeTab, setActiveTab] = useState('feedback');
-<<<<<<< HEAD
   const [showResources, setShowResources] = useState(false);
-=======
-
-  // Using the hook to get the animated critique text
-  const [animatedCritique, isTypingComplete] = useTypingEffect(critique, 5); // Adjust speed as needed
-
-  const processSuggestions = (text) => {
-    const lines = text.split('\n');
-    if (lines[0].startsWith('**')) {
-
-      lines.shift();
-    }
-    return lines.join('\n');
-  };
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
 
   useEffect(() => {
     if (fetching || !critique) return;
@@ -98,10 +59,6 @@ const Feedback = () => {
               <ReactMarkdown className="mt-4 text-dark leading-loose">{critique}</ReactMarkdown>
             </div>
           )}
-<<<<<<< HEAD
-
-=======
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
 
           {activeTab === 'suggestions' && (
             <div className='h-96 overflow-y-auto rounded-lg my-2.5'>
