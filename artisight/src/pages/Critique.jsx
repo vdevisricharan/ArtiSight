@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Feedback from '../components/Feedback';
-import Resources from '../components/Resources';
 import Footer from  '../components/Footer';
 
 const Critique = () => {
@@ -9,7 +8,6 @@ const Critique = () => {
     <div>
       <Navbar />
       <Feedback />
-      <Resources/>
       <Footer />
     </div>
   )

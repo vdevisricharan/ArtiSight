@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import HowItWorksSection from  '../components/HowItWorksSection';
 import JoinCommunitySection from '../components/JoinCommunitySection';
 import Footer from '../components/Footer';
+import Example from '../components/Example';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
             <Navbar />
             <Hero />
             <HowItWorksSection />
+            <Example/>
             <JoinCommunitySection />
             <Footer/>
         </div>
