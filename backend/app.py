@@ -63,10 +63,20 @@ def upload_file():
 
         if file:
             image = Image.open(file.stream)
-            vision_model = genai.GenerativeModel(model_name='gemini-pro-vision',generation_config=generation_config,safety_settings=safety_settings)
-            response = vision_model.generate_content(
-                ["Give a critique of the photo and how the photographer could have improved the shot or how the photographer could have edited the shot to make it look better. Use Technical terms like ISO, Aperture, Shutter Speed, Focal Length, Exposure, etc.", image]
-            )
+            vision_model = genai.GenerativeModel(model_name='gemini-1.5-pro-latest',generation_config=generation_config,safety_settings=safety_settings)
+            # Define the detailed critique prompt
+            critique_prompt = """
+            Please provide a detailed critique of the uploaded photo following these specific steps:
+            1. Look: Examine the photograph closely and note any significant details or elements.
+            2. Interpretation: Describe your emotional response and what the photo might be conveying. Mention any symbolism or themes that appear evident to you.
+            3. Technical Points: Evaluate technical aspects like exposure, focus, color accuracy, and contrast. Comment on the use of lighting, the chosen aperture, and any visible issues like dust or unwanted blur.
+            4. Artistic Points: Discuss the composition, crop, and aspect ratio. Share your thoughts on the balance between the foreground and background, the choice of color or black and white, and the overall aesthetic decisions.
+            5. Good Points: Identify and explain what you particularly like about the photograph, focusing on why these elements work well within the context of the image.
+            6. Points Worth Improving: Suggest specific improvements or changes that could enhance the photograph. These could include adjustments that might be possible in post-processing or general photographic advice for future consideration.
+            7. Overall Impression: Sum up your overall impression of the photograph and its impact.
+            """
+
+            response = vision_model.generate_content([critique_prompt, image])
             return jsonify({'critique': response.text})
 
     except Exception as e:
@@ -83,7 +93,7 @@ def suggest_improvements():
         critique_text = data['critique']
         
         # Assuming the use of an appropriate model to generate suggestions
-        suggestion_model = genai.GenerativeModel('gemini-1.0-pro')
+        suggestion_model = genai.GenerativeModel('gemini-1.5-pro-latest')
         response = suggestion_model.generate_content(
             ["Provide bullet points on how to improve based on the following critique:", critique_text]
         )
@@ -99,7 +109,7 @@ def google_search(query, search_type=None):
         'key': GOOGLE_API_KEY,
         'cx': GOOGLE_CSE_ID,
         'q': query,
-        'num': 3
+        'num': 2
     }
     if search_type:
         params['searchType'] = search_type
@@ -111,7 +121,7 @@ def build_search_query(data):
     genai.configure(api_key=API_KEY)
     model = genai.GenerativeModel('gemini-1.0-pro')
     response = model.generate_content(
-        ["Give google search queries in bullet points to learn from resources according the critique and suggestions below", data['critique'], data['suggestions']]
+        ["Give five google search queries in bullet points to learn from, according the photo critique and suggestions on improving", data['critique'], data['suggestions']]
     )
     return response.text
 
@@ -123,6 +133,7 @@ def get_resources():
             return jsonify({'error': 'Missing required data'}), 400
 
         search_queries = build_search_query(data)
+        print(search_queries)
         top_results = []
         for query in search_queries.strip().split('\n'):
             if query.startswith("- "):
