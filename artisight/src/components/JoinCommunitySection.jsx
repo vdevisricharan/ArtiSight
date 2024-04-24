@@ -1,7 +1,6 @@
 import React from 'react';
 import { community } from '../assets';
 import { Link } from 'react-router-dom';
-
 const JoinCommunitySection = () => {
     return (
         <div className="bg-light py-20 flex flex-col md:flex-row items-center justify-center gap-x-10 gap-y-5">
@@ -18,5 +17,4 @@ const JoinCommunitySection = () => {
         </div>
     ); 
 }
-
 export default JoinCommunitySection;

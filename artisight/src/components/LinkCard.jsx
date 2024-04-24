@@ -15,5 +15,4 @@ const LinkCard = ({ title, thumbnail, link }) => {
         </div>
     );
 };
-
 export default LinkCard;
