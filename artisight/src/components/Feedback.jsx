@@ -18,7 +18,7 @@ const Feedback = () => {
     if (fetching || !critique) return;
     setLoading(true);
     setFetching(true);
-    fetch('http://127.0.0.1:5000/suggest', {
+    fetch('https://artisight.onrender.com/suggest', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

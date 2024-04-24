@@ -17,7 +17,7 @@ const Resources = ({ critique, suggestions }) => {
                     critique: critique,
                     suggestions: suggestions
                 }
-                const response = await axios.post('http://127.0.0.1:5000/resources', data);
+                const response = await axios.post('https://artisight.onrender.com/resources', data);
                 setResources(response.data.webResults);
             } catch (error) {
                 console.error('Error fetching resources:', error);
