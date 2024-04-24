@@ -5,10 +5,7 @@ import axios from 'axios';
 const Resources = ({ critique, suggestions }) => {
     const [resources, setResources] = useState([]);
     const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
     const [fetching, setFetching] = useState(false);
-=======
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,14 +17,8 @@ const Resources = ({ critique, suggestions }) => {
                     critique: critique,
                     suggestions: suggestions
                 }
-<<<<<<< HEAD
                 const response = await axios.post('http://127.0.0.1:5000/resources', data);
                 setResources(response.data.webResults);
-=======
-                const response = await axios.post('https://artisight.onrender.com/resources', data);
-                setResources(response.data.webResults);
-                setLoading(false); // Stop loading after data is fetched
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
             } catch (error) {
                 console.error('Error fetching resources:', error);
             } finally {
@@ -64,9 +55,5 @@ const Resources = ({ critique, suggestions }) => {
         </div>
     );
 };
-<<<<<<< HEAD
 
 export default Resources;
-=======
-export default Resources;
->>>>>>> 6424736ee6c380b6aa4f27093aabf1a36c313766
