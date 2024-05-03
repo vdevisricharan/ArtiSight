@@ -43,5 +43,4 @@ Once both the frontend and backend servers are running, you can access the front
 - [Presentation Slides](ArtiSight%20Presentation.pdf)
 - [Project Report](ArtiSight%20Report.pdf)
 - [Video Demo](ArtiSight%20Demo.mp4)
-
 ```
