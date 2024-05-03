@@ -1,7 +1,7 @@
 # ArtiSight
 
 ## Introduction
-ArtiSight is an AI Photo Critique Assistant utilizing Large LanguageModels (LLMs) to analyze and critique photos. It offers objective and specific feedback on aspects like composition, lighting, color, and subject matter. ArtiSight stands out by providing actionable insights and personalized learning recommendations.
+ArtiSight is an AI Photo Critique Assistant utilizing Large Language Models (LLMs) to analyze and critique photos. It offers objective and specific feedback on aspects like composition, lighting, color, and subject matter. ArtiSight stands out by providing actionable insights and personalized learning recommendations.
 
 ## Folder Structure
 - `/artisight` - Contains the Vite + React.js frontend application.
