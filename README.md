@@ -1,7 +1,7 @@
 # ArtiSight
 
 ## Introduction
-ArtiSight is an innovative solution combining the power of frontend technologies like Vite and React with a robust Python Flask backend to deliver unparalleled user experiences. Explore how ArtiSight harnesses these technologies to solve real-world problems.
+ArtiSight is an AI Photo Critique Assistant utilizing Large LanguageModels (LLMs) to analyze and critique photos. It offers objective and specific feedback on aspects like composition, lighting, color, and subject matter. ArtiSight stands out by providing actionable insights and personalized learning recommendations.
 
 ## Folder Structure
 - `/artisight` - Contains the Vite + React.js frontend application.
@@ -43,4 +43,3 @@ Once both the frontend and backend servers are running, you can access the front
 - [Presentation Slides](ArtiSight%20Presentation.pdf)
 - [Project Report](ArtiSight%20Report.pdf)
 - [Video Demo](ArtiSight%20Demo.mp4)
-```
