@@ -1,43 +1,101 @@
 # ArtiSight
 
-## Introduction
-ArtiSight is an AI Photo Critique Assistant utilizing Large Language Models (LLMs) to analyze and critique photos. It offers objective and specific feedback on aspects like composition, lighting, color, and subject matter. ArtiSight stands out by providing actionable insights and personalized learning recommendations.
+ArtiSight is a full-stack web application that combines a React frontend with a Python backend to provide an interactive art analysis and visualization platform.
 
-## Folder Structure
-- `/artisight` - Contains the Vite + React.js frontend application.
-- `/backend` - Contains the Python Flask backend application.
-- `ArtiSight Presentation.pdf` - Presentation slides for the project.
-- `ArtiSight Report.pdf` - Detailed project report.
-- `ArtiSight Demo.mp4` - Video demonstration of the project.
+## Project Structure
 
-## Installation Instructions
+```
+ArtiSight/
+├── artisight/          # Frontend (React + Vite)
+├── backend/           # Backend (Python)
+└── README.md         # This file
+```
+
+## Prerequisites
+
+- Node.js (v16 or higher)
+- Python 3.8 or higher
+- Docker and Docker Compose (for containerized deployment)
+
+## Development Setup
 
 ### Frontend
-To set up the frontend:
-1. Navigate to the `artisight` folder.
-2. Install dependencies with npm:
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd artisight
    ```
+
+2. Install dependencies:
+   ```bash
    npm install
    ```
+
 3. Start the development server:
-   ```
+   ```bash
    npm run dev
    ```
 
 ### Backend
-To set up the backend:
-1. Navigate to the `backend` folder.
-2. Install the required Python packages:
+
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
    ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
-3. Start the Flask application:
-   ```
+
+4. Start the backend server:
+   ```bash
    python app.py
    ```
 
-## Usage
-Once both the frontend and backend servers are running, you can access the frontend via `http://localhost:5173` and interact with the backend through the API endpoints exposed at `http://127.0.0.1:5000`.
+## Docker Deployment
+
+You can run the entire application using Docker Compose:
+
+1. Build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. Access the application:
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000
+
+## Environment Variables
+
+### Backend
+Create a `.env` file in the backend directory with:
+```
+FLASK_ENV=development
+FLASK_APP=app.py
+```
+
+### Frontend
+Create a `.env` file in the artisight directory with:
+```
+VITE_API_URL=http://localhost:5000
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
 
 ## Additional Resources
 - [Presentation Slides](ArtiSight%20Presentation.pdf)

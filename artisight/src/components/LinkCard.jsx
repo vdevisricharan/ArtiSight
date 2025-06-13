@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LinkCard = ({ title, thumbnail, link }) => {
     return (
         <div className="w-full h-96 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out border">

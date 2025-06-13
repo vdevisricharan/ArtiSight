@@ -1,7 +1,7 @@
 Flask
 Flask-CORS
 Pillow
-google-generativeai
+google-genai
 python-dotenv
 gunicorn
 requests

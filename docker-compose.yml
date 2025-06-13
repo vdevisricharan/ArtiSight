@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: ./artisight
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - artisight-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+    networks:
+      - artisight-network
+
+networks:
+  artisight-network:
+    driver: bridge 

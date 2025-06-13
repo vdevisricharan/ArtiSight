@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../components/Navbar';
 import Uploading from '../components/Uploading';
 import HowItWorksSection from  '../components/HowItWorksSection';

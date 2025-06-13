@@ -2,16 +2,26 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from PIL import Image
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import requests
+import base64
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # This is to allow cross-origin requests from your React frontend
 
-API_KEY = os.getenv('API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 GOOGLE_CSE_ID = os.getenv('GOOGLE_CSE_ID')
-genai.configure(api_key=API_KEY)
+
+if not GEMINI_API_KEY:
+    raise RuntimeError('GEMINI_API_KEY environment variable not set')
+
+gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+GEMINI_MODEL = "gemini-2.5-flash-preview-05-20"
 
 # Set up the model
 generation_config = {
@@ -49,22 +59,21 @@ def hello_world():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     try:
-        # Check if the post request has the file part
         if 'file' not in request.files:
             return jsonify({'error': 'No file part'}), 400
-
         file = request.files['file']
-
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        
         if file.filename == '':
             return jsonify({'error': 'No selected file'}), 400
-
         if file:
-            image = Image.open(file.stream)
-            vision_model = genai.GenerativeModel(model_name='gemini-1.5-pro-latest',generation_config=generation_config,safety_settings=safety_settings)
-            # Define the detailed critique prompt
+            # Save the file to a temporary location
+            temp_path = "temp_uploaded_image.jpg"
+            file.save(temp_path)
+            try:
+                # Upload the file to Gemini
+                gemini_file = gemini_client.files.upload(file=temp_path)
+            except Exception as e:
+                return jsonify({'error': f'Gemini file upload failed: {str(e)}'}), 500
+
             critique_prompt = """
             Please provide a detailed critique of the uploaded photo following these specific steps:
             1. Look: Examine the photograph closely and note any significant details or elements.
@@ -76,29 +85,61 @@ def upload_file():
             7. Overall Impression: Sum up your overall impression of the photograph and its impact.
             """
 
-            response = vision_model.generate_content([critique_prompt, image])
-            return jsonify({'critique': response.text})
+            contents = [
+                critique_prompt,
+                gemini_file
+            ]
 
+            generate_content_config = types.GenerateContentConfig(
+                response_mime_type="text/plain",
+            )
+            try:
+                response_text = ""
+                for chunk in gemini_client.models.generate_content_stream(
+                    model=GEMINI_MODEL,
+                    contents=contents,
+                    config=generate_content_config,
+                ):
+                    response_text += chunk.text or ""
+                return jsonify({'critique': response_text})
+            except Exception as e:
+                return jsonify({'error': f'Gemini API error: {str(e)}'}), 500
+            finally:
+                # Clean up the temp file
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
 @app.route('/suggest', methods=['POST'])
 def suggest_improvements():
     try:
-        # Parsing the critique from the request JSON
         data = request.get_json()
         if not data or 'critique' not in data:
             return jsonify({'error': 'Critique text is missing'}), 400
-
         critique_text = data['critique']
-        
-        # Assuming the use of an appropriate model to generate suggestions
-        suggestion_model = genai.GenerativeModel('gemini-1.5-pro-latest')
-        response = suggestion_model.generate_content(
-            ["Provide bullet points on how to improve based on the following critique:", critique_text]
+        contents = [
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_text(text=f"Provide bullet points on how to improve based on the following critique:\n{critique_text}"),
+                ],
+            ),
+        ]
+        generate_content_config = types.GenerateContentConfig(
+            response_mime_type="text/plain",
         )
-
-        return jsonify({'suggestions': response.text})
+        try:
+            response_text = ""
+            for chunk in gemini_client.models.generate_content_stream(
+                model=GEMINI_MODEL,
+                contents=contents,
+                config=generate_content_config,
+            ):
+                response_text += chunk.text or ""
+            return jsonify({'suggestions': response_text})
+        except Exception as e:
+            return jsonify({'error': f'Gemini API error: {str(e)}'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -117,12 +158,25 @@ def google_search(query, search_type=None):
     return results
 
 def build_search_query(data):
-    genai.configure(api_key=API_KEY)
-    model = genai.GenerativeModel('gemini-1.0-pro')
-    response = model.generate_content(
-        ["Give five google search queries in bullet points to learn from, according the photo critique and suggestions on improving", data['critique'], data['suggestions']]
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=f"Give five google search queries in bullet points to learn from, according the photo critique and suggestions on improving\nCritique: {data['critique']}\nSuggestions: {data['suggestions']}")
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        response_mime_type="text/plain",
     )
-    return response.text
+    response_text = ""
+    for chunk in gemini_client.models.generate_content_stream(
+        model=GEMINI_MODEL,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        response_text += chunk.text or ""
+    return response_text
 
 @app.route('/resources', methods=['POST'])
 def get_resources():
