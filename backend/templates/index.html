@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Photo-Critique API</title>
+    <style>
+      body{font-family:sans-serif;max-width:50rem;margin:auto;padding:2rem}
+      code{background:#f2f2f2;padding:0 .25rem;border-radius:3px}
+      h1,h2{margin-top:2.5rem}
+    </style>
+  </head>
+  <body>
+    <h1>Photo-Critique API</h1>
+    <p>This service lets you upload a photo, receive a detailed critique via Gemini 2.5, get AI-driven improvement tips, and pull curated learning resources.</p>
+
+    <h2>Endpoints</h2>
+    <ul>
+      <li><code>POST /upload</code> &nbsp;-&nbsp; upload an image file and receive a critique</li>
+      <li><code>POST /suggest</code> &nbsp;-&nbsp; turn the critique into bullet-point improvements</li>
+      <li><code>POST /resources</code> &nbsp;-&nbsp; get Google search resources based on the critique + suggestions</li>
+    </ul>
+
+    <h2>Quick test</h2>
+    <p>Run <code>curl -F "file=@/path/to/photo.jpg" http://localhost:5000/upload</code></p>
+
+    <p>Full OpenAPI / Swagger docs are also served at <code>/apidocs</code>.</p>
+  </body>
+</html>

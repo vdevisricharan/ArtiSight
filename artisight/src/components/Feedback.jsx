@@ -14,16 +14,6 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Skeleton loader for better perceived performance
-const SkeletonLoader = () => (
-  <div className="animate-pulse mt-4">
-    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-    <div className="h-4 bg-gray-200 rounded w-5/6 mb-2"></div>
-    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-  </div>
-);
-
 // Error component with retry functionality
 const ErrorDisplay = ({ error, onRetry }) => (
   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -47,12 +37,13 @@ const Feedback = memo(() => {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('feedback');
   const [showResources, setShowResources] = useState(false);
+  const [hasRequestedSuggestions, setHasRequestedSuggestions] = useState(false);
   
   const navigate = useNavigate();
 
   // Fetch suggestions function
   const fetchSuggestions = useCallback(async () => {
-    if (!critique || suggestions) return; // Don't fetch if we already have suggestions
+    if (!critique) return; // Don't fetch if we don't have a critique
     
     setLoading(true);
     setError('');
@@ -63,10 +54,17 @@ const Feedback = memo(() => {
         { critique },
         { 
           headers: { 'Content-Type': 'application/json' },
-          timeout: 10000 // 10 second timeout
+          timeout: 30000 // 30 second timeout
         }
       );
-      dispatch(setSuggestions(response.data.suggestions));
+
+      const { suggestions: newSuggestions } = response.data;
+      if (!newSuggestions) {
+        throw new Error('No suggestions received from server');
+      }
+      
+      dispatch(setSuggestions(newSuggestions));
+      setHasRequestedSuggestions(true);
     } catch (error) {
       const errorMessage = error.response?.data?.error ||
         error.message ||
@@ -75,14 +73,16 @@ const Feedback = memo(() => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, critique, suggestions]);
+  }, [dispatch, critique]);
 
-  // Fetch suggestions
-  useEffect(() => {
+  // Handle suggestions button click
+  const handleGetSuggestions = useCallback(() => {
     if (!suggestions) {
       fetchSuggestions();
+    } else {
+      setActiveTab('suggestions');
     }
-  }, [suggestions]);
+  }, [suggestions, fetchSuggestions]);
 
   // Tab change handler with keyboard support
   const handleTabChange = useCallback((tab) => {
@@ -189,6 +189,18 @@ const Feedback = memo(() => {
                   <ReactMarkdown className="prose prose-sm max-w-none text-dark leading-relaxed">
                     {critique}
                   </ReactMarkdown>
+                  {!suggestions && !loading && !hasRequestedSuggestions && (
+                    <div className="mt-6 text-center">
+                      <p className="text-gray-600 mb-4">Want to get specific improvement suggestions?</p>
+                      <button
+                        onClick={handleGetSuggestions}
+                        className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"
+                        aria-label="Get Improvement Suggestions"
+                      >
+                        Give Suggestions
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -202,13 +214,25 @@ const Feedback = memo(() => {
                   {loading ? (
                     <LoadingSpinner />
                   ) : error ? (
-                    <ErrorDisplay error={error}/>
+                    <ErrorDisplay 
+                      error={error} 
+                      onRetry={fetchSuggestions}
+                    />
                   ) : suggestions ? (
                     <ReactMarkdown className="prose prose-sm max-w-none text-dark leading-relaxed">
                       {suggestions}
                     </ReactMarkdown>
                   ) : (
-                    <SkeletonLoader />
+                    <div className="text-center py-8">
+                      <p className="text-gray-600 mb-4">No suggestions available yet.</p>
+                      <button
+                        onClick={handleGetSuggestions}
+                        className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"
+                        aria-label="Get Improvement Suggestions"
+                      >
+                        Get Suggestions
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
@@ -217,6 +241,16 @@ const Feedback = memo(() => {
 
           {/* Action Buttons */}
           <div className='flex flex-wrap gap-4 justify-center mt-8'>
+            {!suggestions && !loading && (
+              <button
+                onClick={handleGetSuggestions}
+                className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"
+                aria-label="Get Improvement Suggestions"
+              >
+                Give Suggestions
+              </button>
+            )}
+            
             <button
               onClick={() => setShowResources(!showResources)}
               className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"

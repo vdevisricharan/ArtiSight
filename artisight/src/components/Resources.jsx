@@ -15,15 +15,39 @@ const Resources = ({ critique, suggestions }) => {
         try {
             const data = {
                 critique: critique,
-                suggestions: suggestions
+                suggestions: suggestions,
+                maxResults: 2 // Default to 2 results per query as per API
             };
             const response = await axios.post(
                 `${import.meta.env.VITE_API_URL}/resources`,
-                data
+                data,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    timeout: 15000 // 15 second timeout
+                }
             );
-            setResources(response.data.webResults);
+
+            // Updated to match new API response structure
+            const { webResults, searchQueries, searchSummary } = response.data;
+            if (!webResults || !Array.isArray(webResults)) {
+                throw new Error('Invalid response format from server');
+            }
+
+            // Update resources with the new structure
+            setResources(webResults.map(result => ({
+                title: result.title,
+                link: result.link,
+                snippet: result.snippet,
+                thumbnail: result.thumbnail || null,
+                displayLink: result.displayLink,
+                formattedUrl: result.formattedUrl,
+                searchQuery: result.searchQuery
+            })));
         } catch (error) {
-            setError('Failed to fetch resources. Please try again.');
+            const errorMessage = error.response?.data?.error ||
+                error.message ||
+                'Failed to fetch resources. Please try again.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
             setFetching(false);

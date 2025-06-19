@@ -293,9 +293,8 @@ const Uploading = () => {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-          timeout: 30000, // 30 second timeout
+          timeout: 60000, // 60 second timeout
           onUploadProgress: (progressEvent) => {
-            // Real upload progress if needed
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
@@ -304,8 +303,13 @@ const Uploading = () => {
         }
       );
 
-      const data = response.data;
-      dispatch(setCritique(data.critique));
+      // Updated to match new API response structure
+      const { critique, filename } = response.data;
+      if (!critique) {
+        throw new Error('No critique received from server');
+      }
+      
+      dispatch(setCritique(critique));
       navigate('/feedback');
     } catch (error) {
       let errorMessage = 'Failed to upload image. Please try again.';

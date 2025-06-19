@@ -8,7 +8,6 @@ ArtiSight is a full-stack web application that combines a React frontend with a 
 ArtiSight/
 ├── artisight/          # Frontend (React + Vite)
 ├── backend/           # Backend (Python)
-└── README.md         # This file
 ```
 
 ## Prerequisites
@@ -77,8 +76,9 @@ You can run the entire application using Docker Compose:
 ### Backend
 Create a `.env` file in the backend directory with:
 ```
-FLASK_ENV=development
-FLASK_APP=app.py
+GEMINI_API_KEY=
+GOOGLE_API_KEY=
+GOOGLE_CSE_ID=
 ```
 
 ### Frontend
