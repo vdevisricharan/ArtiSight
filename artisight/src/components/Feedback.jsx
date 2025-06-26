@@ -1,10 +1,18 @@
-import { useState, useEffect, useCallback, memo } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSuggestions, selectUploadedImage, selectCritique, selectSuggestions, resetImageState } from '../redux/imageSlice';
+import {
+  setSuggestions,
+  setResources,
+  selectUploadedImage,
+  selectCritique,
+  selectSuggestions,
+  resetImageState
+} from '../redux/imageSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import Resources from './Resources';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 // Enhanced Loading Spinner Component
 const LoadingSpinner = () => (
@@ -14,7 +22,6 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Error component with retry functionality
 const ErrorDisplay = ({ error, onRetry }) => (
   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
     <p className="text-red-600 mb-3" role="alert">{error}</p>
@@ -27,34 +34,40 @@ const ErrorDisplay = ({ error, onRetry }) => (
   </div>
 );
 
+ErrorDisplay.propTypes = {
+  error: PropTypes.string.isRequired,
+  onRetry: PropTypes.func.isRequired,
+};
+
 const Feedback = memo(() => {
   const dispatch = useDispatch();
   const uploadedImage = useSelector(selectUploadedImage);
   const critique = useSelector(selectCritique);
   const suggestions = useSelector(selectSuggestions);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('feedback');
   const [showResources, setShowResources] = useState(false);
   const [hasRequestedSuggestions, setHasRequestedSuggestions] = useState(false);
-  
+
   const navigate = useNavigate();
 
-  // Fetch suggestions function
+  // Fetch suggestions and then resources
   const fetchSuggestions = useCallback(async () => {
-    if (!critique) return; // Don't fetch if we don't have a critique
-    
+    if (!critique) return;
+
     setLoading(true);
     setError('');
-    
+
     try {
+      // 1. Fetch suggestions
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/suggest`,
         { critique },
-        { 
+        {
           headers: { 'Content-Type': 'application/json' },
-          timeout: 30000 // 30 second timeout
+          timeout: 30000
         }
       );
 
@@ -62,13 +75,39 @@ const Feedback = memo(() => {
       if (!newSuggestions) {
         throw new Error('No suggestions received from server');
       }
-      
+
       dispatch(setSuggestions(newSuggestions));
       setHasRequestedSuggestions(true);
+
+      // 2. Fetch resources immediately after suggestions
+      const resourcesResponse = await axios.post(
+        `${import.meta.env.VITE_API_URL}/resources`,
+        {
+          critique,
+          suggestions: newSuggestions,
+          maxResults: 2
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          timeout: 15000
+        }
+      );
+
+      const { webResults } = resourcesResponse.data;
+      if (!webResults || !Array.isArray(webResults)) {
+        throw new Error('Invalid response format from server');
+      }
+
+      dispatch(setResources({
+        critique,
+        suggestions: newSuggestions,
+        webResults
+      }));
+
     } catch (error) {
       const errorMessage = error.response?.data?.error ||
         error.message ||
-        'Failed to fetch suggestions. Please try again.';
+        'Failed to fetch suggestions/resources. Please try again.';
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -241,23 +280,13 @@ const Feedback = memo(() => {
 
           {/* Action Buttons */}
           <div className='flex flex-wrap gap-4 justify-center mt-8'>
-            {!suggestions && !loading && (
-              <button
-                onClick={handleGetSuggestions}
-                className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"
-                aria-label="Get Improvement Suggestions"
-              >
-                Give Suggestions
-              </button>
-            )}
-            
             <button
               onClick={() => setShowResources(!showResources)}
               className="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 shadow-md hover:shadow-lg"
               aria-pressed={showResources}
               aria-label={showResources ? "Hide Resources" : "Show Resources"}
             >
-              {showResources ? 'Hide Resources' : 'Search Resources'}
+              {showResources ? 'Hide Resources' : 'Show Resources'}
             </button>
             
             <button

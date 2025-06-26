@@ -10,6 +10,7 @@ export const imageSlice = createSlice({
         uploadedImage: null,
         critique: null,
         suggestions: null,
+        resources: null, // <-- add this
     },
     reducers: {
         /**
@@ -31,12 +32,19 @@ export const imageSlice = createSlice({
             state.suggestions = action.payload;
         },
         /**
+         * Set the resources array
+         */
+        setResources: (state, action) => {
+            state.resources = action.payload;
+        },
+        /**
          * Reset all image-related state
          */
         resetImageState: (state) => {
             state.uploadedImage = null;
             state.critique = null;
             state.suggestions = null;
+            state.resources = null; // <-- reset resources
         },
     },
 });
@@ -45,6 +53,7 @@ export const {
     setUploadedImage,
     setCritique,
     setSuggestions,
+    setResources, // <-- export this
     resetImageState,
 } = imageSlice.actions;
 
@@ -55,5 +64,7 @@ export const selectUploadedImage = (state) => state.image.uploadedImage;
 export const selectCritique = (state) => state.image.critique;
 /** @returns {string|null} suggestions string or null */
 export const selectSuggestions = (state) => state.image.suggestions;
+/** @returns {array|null} resources array or null */
+export const selectResources = (state) => state.image.resources;
 
 export default imageSlice.reducer;

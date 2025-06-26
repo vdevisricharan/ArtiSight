@@ -9,9 +9,9 @@ const Hero = () => {
           <div className="absolute top-32 right-20 w-16 h-16 border border-white rounded-full"></div>
           <div className="absolute bottom-20 left-1/4 w-12 h-12 border border-white rounded-full"></div>
         </div>
-        
+
         <div className="relative z-10">
-          <h1 
+          <h1
             id="hero-heading"
             className="text-3xl md:text-4xl lg:text-6xl font-bold leading-tight mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent"
           >
@@ -20,7 +20,7 @@ const Hero = () => {
           <p className="text-xl md:text-2xl lg:text-3xl my-5 md:my-8 lg:my-10 leading-relaxed opacity-90">
             Level up your photography skills with AI-powered insights
           </p>
-          <button 
+          <button
             onClick={() => window.location.href = '/upload'}
             className="bg-white text-primary py-4 px-8 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
             aria-describedby="hero-description"
