@@ -1,5 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="text-white mx-4 md:mx-8 lg:mx-20 my-8" aria-labelledby="hero-heading">
       <div className="rounded-3xl py-24 md:py-36 lg:py-56 px-8 md:px-24 lg:px-48 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800 relative overflow-hidden">
@@ -21,7 +24,8 @@ const Hero = () => {
             Level up your photography skills with AI-powered insights
           </p>
           <button
-            onClick={() => window.location.href = '/upload'}
+            type="button"
+            onClick={() => navigate('/upload')}
             className="bg-white text-primary py-4 px-8 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
             aria-describedby="hero-description"
           >

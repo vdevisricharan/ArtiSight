@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { CheckCircle, X, Upload, Image as ImageIcon } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import { cameraImage } from '../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUploadedImage, setCritique, selectUploadedImage } from '../redux/imageSlice';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 // Constants
 const VALID_FILE_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
@@ -28,7 +29,6 @@ const LoadingSpinner = () => (
   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
 );
 
-// File Preview Component
 const FilePreview = ({ file, onRemove, uploadProgress, uploaded }) => (
   <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 mt-4">
     <div className="flex items-center justify-between">
@@ -74,6 +74,17 @@ const FilePreview = ({ file, onRemove, uploadProgress, uploaded }) => (
   </div>
 );
 
+FilePreview.propTypes = {
+  file: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired,
+    type: PropTypes.string,
+  }).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  uploadProgress: PropTypes.number.isRequired,
+  uploaded: PropTypes.bool.isRequired,
+};
+
 // Drag and Drop Zone Component
 const DropZone = ({ isDragActive, onBrowseClick, children }) => (
   <div 
@@ -109,6 +120,12 @@ const DropZone = ({ isDragActive, onBrowseClick, children }) => (
   </div>
 );
 
+DropZone.propTypes = {
+  isDragActive: PropTypes.bool.isRequired,
+  onBrowseClick: PropTypes.func.isRequired,
+  children: PropTypes.node,
+};
+
 const Uploading = () => {
   const [file, setFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -116,7 +133,6 @@ const Uploading = () => {
   const [fileError, setFileError] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
-  const [dragCounter, setDragCounter] = useState(0);
   
   const dispatch = useDispatch();
   const uploadedImage = useSelector(selectUploadedImage);
@@ -137,11 +153,33 @@ const Uploading = () => {
     };
   }, [uploadedImage]);
 
-  // Enhanced drag handlers with counter to handle nested elements
+  // Enhanced upload simulation with more realistic progress
+  const simulateFileUpload = useCallback((newFile) => {
+    let progress = 0;
+    setUploadProgress(0);
+
+    // Clear any existing interval
+    if (uploadIntervalRef.current) {
+      clearInterval(uploadIntervalRef.current);
+    }
+
+    uploadIntervalRef.current = setInterval(() => {
+      progress += Math.random() * 15; // Variable progress increments
+      progress = Math.min(progress, 100);
+      setUploadProgress(Math.round(progress));
+
+      if (progress >= 100) {
+        clearInterval(uploadIntervalRef.current);
+        setUploaded(true);
+        const imageSrc = URL.createObjectURL(newFile);
+        dispatch(setUploadedImage(imageSrc));
+      }
+    }, 200);
+  }, [dispatch]);
+
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragCounter(prev => prev + 1);
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       setIsDragActive(true);
     }
@@ -150,13 +188,7 @@ const Uploading = () => {
   const handleDragLeave = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragCounter(prev => {
-      const newCounter = prev - 1;
-      if (newCounter === 0) {
-        setIsDragActive(false);
-      }
-      return newCounter;
-    });
+    setIsDragActive(false);
   }, []);
 
   const handleDragOver = useCallback((e) => {
@@ -168,22 +200,43 @@ const Uploading = () => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
-    setDragCounter(0);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const newFile = e.dataTransfer.files[0];
-      validateAndSetFile(newFile);
+
+      // Validate file type
+      if (!isValidFileType(newFile.type)) {
+        setFileError(`Unsupported file format. Please upload ${SUPPORTED_FORMATS} images.`);
+        return;
+      }
+
+      // Validate file size
+      if (newFile.size > MAX_FILE_SIZE) {
+        setFileError(`File is too large (${formatFileSize(newFile.size)}). Maximum size is ${MAX_FILE_SIZE_MB}MB.`);
+        return;
+      }
+
+      // Check if file is actually an image by trying to create an image object
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(newFile);
+
+      img.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        setFile(newFile);
+        simulateFileUpload(newFile);
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        setFileError('Invalid image file. Please select a valid image.');
+      };
+
+      img.src = objectUrl;
     }
-  }, []);
+  }, [simulateFileUpload]);
 
-  // Enhanced file validation with better error messages
+  // Validate and set file helper
   const validateAndSetFile = useCallback((newFile) => {
-    // Reset previous states
-    setFileError('');
-    setFile(null);
-    setUploaded(false);
-    setUploadProgress(0);
-
     // Validate file type
     if (!isValidFileType(newFile.type)) {
       setFileError(`Unsupported file format. Please upload ${SUPPORTED_FORMATS} images.`);
@@ -197,46 +250,22 @@ const Uploading = () => {
     }
 
     // Check if file is actually an image by trying to create an image object
-    const img = new Image();
+    const img = new window.Image();
     const objectUrl = URL.createObjectURL(newFile);
-    
+
     img.onload = () => {
       URL.revokeObjectURL(objectUrl);
       setFile(newFile);
       simulateFileUpload(newFile);
     };
-    
+
     img.onerror = () => {
       URL.revokeObjectURL(objectUrl);
       setFileError('Invalid image file. Please select a valid image.');
     };
-    
-    img.src = objectUrl;
-  }, []);
 
-  // Enhanced upload simulation with more realistic progress
-  const simulateFileUpload = useCallback((newFile) => {
-    let progress = 0;
-    setUploadProgress(0);
-    
-    // Clear any existing interval
-    if (uploadIntervalRef.current) {
-      clearInterval(uploadIntervalRef.current);
-    }
-    
-    uploadIntervalRef.current = setInterval(() => {
-      progress += Math.random() * 15; // Variable progress increments
-      progress = Math.min(progress, 100);
-      setUploadProgress(Math.round(progress));
-      
-      if (progress >= 100) {
-        clearInterval(uploadIntervalRef.current);
-        setUploaded(true);
-        const imageSrc = URL.createObjectURL(newFile);
-        dispatch(setUploadedImage(imageSrc));
-      }
-    }, 200);
-  }, [dispatch]);
+    img.src = objectUrl;
+  }, [simulateFileUpload]);
 
   // File input change handler
   const handleFileChange = useCallback((e) => {
@@ -304,7 +333,7 @@ const Uploading = () => {
       );
 
       // Updated to match new API response structure
-      const { critique, filename } = response.data;
+      const { critique } = response.data;
       if (!critique) {
         throw new Error('No critique received from server');
       }

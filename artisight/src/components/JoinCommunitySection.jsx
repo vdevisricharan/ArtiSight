@@ -1,7 +1,9 @@
-
 import { Camera, Users } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const JoinCommunitySection = () => {
+  const navigate = useNavigate();
+
   return (
     <section 
       id="community"
@@ -53,7 +55,8 @@ const JoinCommunitySection = () => {
           </p>
           <div className="flex justify-center lg:justify-start">
             <button 
-              onClick={() => window.location.href = '/upload'}
+              type="button"
+              onClick={() => navigate('/upload')}
               className="bg-primary py-4 px-8 text-white font-bold rounded-full hover:bg-secondary transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50 shadow-lg hover:shadow-xl"
             >
               Get started

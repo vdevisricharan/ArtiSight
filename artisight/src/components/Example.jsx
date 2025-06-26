@@ -35,7 +35,7 @@ const Example = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [steps.length]);
 
   return (
     <section 
