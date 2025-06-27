@@ -19,15 +19,21 @@ const LoadingSpinner = () => (
 // Home component
 const Home = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-purple-50 flex flex-col">
       <Navbar />
-      <main>
+      <main className="flex-1 flex flex-col gap-0">
         <Hero />
-        <HowItWorksSection />
-        <Suspense fallback={<LoadingSpinner />}>
-          <LazyExample />
-        </Suspense>
-        <JoinCommunitySection />
+        <section className="relative z-10">
+          <HowItWorksSection />
+        </section>
+        <section className="relative z-10">
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyExample />
+          </Suspense>
+        </section>
+        <section className="relative z-10">
+          <JoinCommunitySection />
+        </section>
       </main>
       <Footer />
     </div>

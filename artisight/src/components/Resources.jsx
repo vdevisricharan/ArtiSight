@@ -14,7 +14,7 @@ const Resources = () => {
                 <div className='px-5 lg:px-10'>
                     {/* Enhanced header with gradient text */}
                     <div className="text-center mb-12">
-                        <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
+                        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
                             Resources
                         </h2>
                         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
@@ -48,11 +48,11 @@ const Resources = () => {
             <div className='px-5 lg:px-10'>
                 {/* Enhanced header section */}
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
+                    <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
                         Curated Resources
                     </h2>
                     <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-6"></div>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                         Discover handpicked resources tailored to enhance your photography skills
                     </p>
                 </div>

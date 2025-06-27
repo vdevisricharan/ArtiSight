@@ -192,7 +192,7 @@ const Feedback = memo(() => {
         {/* Image Section */}
         <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
           <div className="text-center lg:text-left mb-8">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
               Your Masterpiece
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0"></div>
@@ -214,7 +214,7 @@ const Feedback = memo(() => {
         {/* Content Section */}
         <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
           <div className="text-center lg:text-left mb-8">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
               AI Analysis
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0"></div>
@@ -226,7 +226,7 @@ const Feedback = memo(() => {
               <button
                 onClick={() => handleTabChange('feedback')}
                 onKeyDown={(e) => handleKeyDown(e, 'feedback')}
-                className={`flex items-center gap-2 px-6 py-3 text-lg font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
+                className={`flex items-center gap-2 px-6 py-3 text-md font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
                   activeTab === 'feedback' 
                     ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg transform scale-105' 
                     : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
@@ -245,7 +245,7 @@ const Feedback = memo(() => {
               <button
                 onClick={() => handleTabChange('suggestions')}
                 onKeyDown={(e) => handleKeyDown(e, 'suggestions')}
-                className={`flex items-center gap-2 px-6 py-3 text-lg font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
+                className={`flex items-center gap-2 px-6 py-3 text-md font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
                   activeTab === 'suggestions' 
                     ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg transform scale-105' 
                     : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
@@ -353,7 +353,7 @@ const Feedback = memo(() => {
           <div className='flex flex-wrap gap-4 justify-center lg:justify-start mt-12'>
             <button
               onClick={() => setShowResources(!showResources)}
-              className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300 ${
+              className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300 ${
                 showResources 
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white'
                   : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white'
@@ -369,7 +369,7 @@ const Feedback = memo(() => {
             
             <button
               onClick={handleNewPhoto}
-              className="inline-flex items-center gap-3 border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 bg-white/80 backdrop-blur-sm"
+              className="inline-flex items-center gap-3 border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-full font-semibold text-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 bg-white/80 backdrop-blur-sm"
               aria-label="Submit Another Photo"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

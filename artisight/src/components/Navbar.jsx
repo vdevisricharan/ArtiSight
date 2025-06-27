@@ -46,7 +46,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-4 w-full flex items-center justify-between sm:justify-around">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 py-4 w-full flex items-center justify-between sm:justify-around shadow-sm transition-all duration-300">
       <div className="text-xl font-bold p-4">
         <a 
           href="/" 

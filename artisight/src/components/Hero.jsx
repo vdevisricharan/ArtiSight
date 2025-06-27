@@ -26,7 +26,7 @@ const Hero = () => {
           <button
             type="button"
             onClick={() => navigate('/upload')}
-            className="bg-white text-primary py-4 px-8 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-3 border-2 border-blue-500 text-blue-600 px-8 py-4 rounded-full font-semibold text-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 bg-white/80 backdrop-blur-sm"
             aria-describedby="hero-description"
           >
             Submit for review
