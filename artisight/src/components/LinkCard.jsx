@@ -14,7 +14,7 @@ const LinkCard = ({ title, thumbnail, link }) => {
     return (
         <div className="group relative w-full h-96 rounded-3xl overflow-hidden transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl border border-gray-200/50 bg-white backdrop-blur-sm">
             {/* Gradient overlay for depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
             {/* Image container with enhanced styling */}
             <div className="relative w-full h-2/3 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
