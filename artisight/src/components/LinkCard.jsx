@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types';
+import { placeholderImage } from '../assets';
 
 const LinkCard = ({ title, thumbnail, link }) => {
+    // Default placeholder image - you can replace this with any default image URL
+    const defaultImage = placeholderImage;
+
+    // Use thumbnail if provided and not empty, otherwise use default
+    const imageSrc = thumbnail && thumbnail.trim() !== '' ? thumbnail : defaultImage;
+    
     // Ensure the link has a protocol for window.open
     const safeLink = link && !/^https?:\/\//i.test(link) ? `https://${link}` : link;
 
@@ -20,9 +27,15 @@ const LinkCard = ({ title, thumbnail, link }) => {
             <div className="relative w-full h-2/3 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                 <img 
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-                    src={thumbnail} 
-                    alt={title}
+                    src={imageSrc} 
+                    alt={title || 'Link preview'}
                     loading="lazy"
+                    onError={(e) => {
+                        // Fallback to default image if the provided image fails to load
+                        if (e.target.src !== defaultImage) {
+                            e.target.src = defaultImage;
+                        }
+                    }}
                 />
                 {/* Shimmer effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
@@ -59,7 +72,7 @@ const LinkCard = ({ title, thumbnail, link }) => {
 
 LinkCard.propTypes = {
     title: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string, // Made optional since we now handle empty values
     link: PropTypes.string.isRequired,
 };
 

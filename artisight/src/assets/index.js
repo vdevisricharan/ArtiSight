@@ -11,7 +11,7 @@ import Ravi_k__chandran from './Ravi_k._chandran.jpg';
 import Ravi_Varman from './Ravi_Varman.jpg';
 import Sivan from './Sivan.jpg';
 import sudeep from './sudeep.jpg';
-
+import placeholderImage from './placeholder.svg';
 
 export {
     cameraImage,
@@ -26,5 +26,6 @@ export {
     Ravi_k__chandran,
     Ravi_Varman,
     Sivan,
-    sudeep
-}
+    sudeep,
+    placeholderImage
+};
