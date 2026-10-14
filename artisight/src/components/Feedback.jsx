@@ -1,398 +1,410 @@
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setSuggestions,
-  setResources,
   selectUploadedImage,
-  selectCritique,
-  selectSuggestions,
-  resetImageState
+  selectAnalysisResult,
+  resetImageState,
 } from '../redux/imageSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import Resources from './Resources';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import {
+  Sparkles,
+  Award,
+  CheckCircle2,
+  AlertTriangle,
+  BookOpen,
+  Copy,
+  Printer,
+  Upload,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Share2,
+} from 'lucide-react';
+import CompositionOverlay from './CompositionOverlay';
+import TechnicalAnalysisPanel from './TechnicalAnalysisPanel';
 
-// Enhanced Loading Spinner Component
-const LoadingSpinner = () => (
-  <div className="flex flex-col items-center justify-center p-12">
-    <div className="relative">
-      <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mb-6"></div>
-      <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-r-purple-300 rounded-full animate-spin animation-delay-150"></div>
-    </div>
-    <div className="text-center">
-      <p className="text-xl font-semibold text-gray-800 mb-2">Analyzing your photo...</p>
-      <p className="text-gray-600">Our AI is crafting personalized suggestions</p>
-    </div>
-  </div>
-);
-
-const ErrorDisplay = ({ error, onRetry }) => (
-  <div className="p-8 bg-gradient-to-br from-red-50 to-pink-50 border border-red-200/50 rounded-2xl backdrop-blur-sm">
-    <div className="flex items-center mb-4">
-      <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
-        <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-        </svg>
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold text-red-800 mb-1">Oops! Something went wrong</h3>
-        <p className="text-red-600" role="alert">{error}</p>
-      </div>
-    </div>
-    <button
-      onClick={onRetry}
-      className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-    >
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-      </svg>
-      Try Again
-    </button>
-  </div>
-);
-
-ErrorDisplay.propTypes = {
-  error: PropTypes.string.isRequired,
-  onRetry: PropTypes.func.isRequired,
-};
-
-const Feedback = memo(() => {
+const Feedback = () => {
   const dispatch = useDispatch();
-  const uploadedImage = useSelector(selectUploadedImage);
-  const critique = useSelector(selectCritique);
-  const suggestions = useSelector(selectSuggestions);
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('feedback');
-  const [showResources, setShowResources] = useState(false);
-  const [hasRequestedSuggestions, setHasRequestedSuggestions] = useState(false);
-
   const navigate = useNavigate();
 
-  // Fetch suggestions and then resources
-  const fetchSuggestions = useCallback(async () => {
-    if (!critique) return;
+  const uploadedImage = useSelector(selectUploadedImage);
+  const analysisResult = useSelector(selectAnalysisResult);
 
-    setLoading(true);
-    setError('');
+  const [expandedScore, setExpandedScore] = useState(null);
+  const [copied, setCopied] = useState(false);
 
-    try {
-      // 1. Fetch suggestions
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/suggest`,
-        { critique },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 30000
-        }
-      );
-
-      const { suggestions: newSuggestions } = response.data;
-      if (!newSuggestions) {
-        throw new Error('No suggestions received from server');
-      }
-
-      dispatch(setSuggestions(newSuggestions));
-      setHasRequestedSuggestions(true);
-
-      // 2. Fetch resources immediately after suggestions
-      const resourcesResponse = await axios.post(
-        `${import.meta.env.VITE_API_URL}/resources`,
-        {
-          critique,
-          suggestions: newSuggestions,
-          maxResults: 2
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          timeout: 15000
-        }
-      );
-
-      const { webResults } = resourcesResponse.data;
-      if (!webResults || !Array.isArray(webResults)) {
-        throw new Error('Invalid response format from server');
-      }
-
-      dispatch(setResources({
-        critique,
-        suggestions: newSuggestions,
-        webResults
-      }));
-
-    } catch (error) {
-      const errorMessage = error.response?.data?.error ||
-        error.message ||
-        'Failed to fetch suggestions/resources. Please try again.';
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  }, [dispatch, critique]);
-
-  // Handle suggestions button click
-  const handleGetSuggestions = useCallback(() => {
-    if (!suggestions) {
-      fetchSuggestions();
-    } else {
-      setActiveTab('suggestions');
-    }
-  }, [suggestions, fetchSuggestions]);
-
-  // Tab change handler with keyboard support
-  const handleTabChange = useCallback((tab) => {
-    setActiveTab(tab);
-  }, []);
-
-  // Handle keyboard navigation for tabs
-  const handleKeyDown = useCallback((event, tab) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleTabChange(tab);
-    }
-  }, [handleTabChange]);
-
-  // Handle new photo submission
   const handleNewPhoto = useCallback(() => {
     dispatch(resetImageState());
     navigate('/upload');
   }, [dispatch, navigate]);
 
-  // Fallbacks for missing data
-  if (!uploadedImage || !critique) {
+  const handleCopyReport = useCallback(() => {
+    if (!analysisResult?.fullCritiqueMarkdown) return;
+    navigator.clipboard.writeText(analysisResult.fullCritiqueMarkdown);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }, [analysisResult]);
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
+
+  const toggleScoreRationale = (category) => {
+    setExpandedScore(expandedScore === category ? null : category);
+  };
+
+  // Fallback for missing data
+  if (!uploadedImage || !analysisResult) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 flex flex-col items-center justify-center p-8">
-        <div className="text-center max-w-md">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mb-8 mx-auto">
-            <svg className="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+        <div className="text-center max-w-md bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+          <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+            <Upload size={32} />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">No Photo Uploaded</h2>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">Upload your photography masterpiece to get AI-powered feedback and personalized suggestions</p>
-          <Link to="/upload">
-            <button className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-              Start Uploading
-            </button>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">No Active Photo Critique</h2>
+          <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+            Upload your photograph to generate an explainable AI critique, OpenCV technical metrics, and hands-on photography assignments.
+          </p>
+          <Link
+            to="/upload"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-md hover:shadow-lg"
+          >
+            Start New Critique
           </Link>
         </div>
       </div>
     );
   }
 
+  const {
+    summary,
+    scores,
+    recommendations = [],
+    resources = [],
+    cvMetrics,
+    exifData,
+    image,
+    metadata,
+  } = analysisResult;
+
+  const scoreCategories = [
+    { key: 'composition', label: 'Composition', data: scores.composition, color: 'bg-indigo-500' },
+    { key: 'lighting', label: 'Lighting & Exposure', data: scores.lighting, color: 'bg-amber-500' },
+    { key: 'focus', label: 'Focus & Clarity', data: scores.focus, color: 'bg-blue-500' },
+    { key: 'color', label: 'Color & Harmony', data: scores.color, color: 'bg-emerald-500' },
+    { key: 'storytelling', label: 'Story & Narrative', data: scores.storytelling, color: 'bg-purple-500' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
-      <div className='flex flex-col lg:flex-row items-start justify-center p-8 lg:px-20 max-w-7xl mx-auto gap-12'>
-        {/* Image Section */}
-        <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
-          <div className="text-center lg:text-left mb-8">
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
-              Your Masterpiece
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0"></div>
-          </div>
-          
-          <div className="relative group">
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-500"></div>
-            <div className="relative bg-white p-4 rounded-3xl shadow-2xl">
-              <img 
-                src={uploadedImage} 
-                alt="Uploaded preview" 
-                className="rounded-2xl max-w-full h-auto shadow-lg transition-transform duration-500 group-hover:scale-[1.02]" 
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
-          <div className="text-center lg:text-left mb-8">
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
-              AI Analysis
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0"></div>
-          </div>
-          
-          {/* Enhanced Tab Navigation */}
-          <div className="w-full">
-            <div className="flex bg-white/60 backdrop-blur-sm rounded-2xl p-2 border border-gray-200/50 shadow-lg mb-6" role="tablist" aria-label="Feedback and Suggestions Tabs">
-              <button
-                onClick={() => handleTabChange('feedback')}
-                onKeyDown={(e) => handleKeyDown(e, 'feedback')}
-                className={`flex items-center gap-2 px-6 py-3 text-md font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
-                  activeTab === 'feedback' 
-                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg transform scale-105' 
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
-                }`}
-                role="tab"
-                aria-selected={activeTab === 'feedback'}
-                aria-controls="feedback-panel"
-                id="feedback-tab"
-                tabIndex={0}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Feedback
-              </button>
-              <button
-                onClick={() => handleTabChange('suggestions')}
-                onKeyDown={(e) => handleKeyDown(e, 'suggestions')}
-                className={`flex items-center gap-2 px-6 py-3 text-md font-semibold rounded-xl transition-all duration-300 flex-1 justify-center ${
-                  activeTab === 'suggestions' 
-                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg transform scale-105' 
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-white/50'
-                }`}
-                role="tab"
-                aria-selected={activeTab === 'suggestions'}
-                aria-controls="suggestions-panel"
-                id="suggestions-tab"
-                tabIndex={0}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-                Suggestions
-              </button>
-            </div>
-
-            {/* Enhanced Tab Content */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 overflow-hidden">
-              {activeTab === 'feedback' && (
-                <div 
-                  id="feedback-panel" 
-                  role="tabpanel" 
-                  aria-labelledby="feedback-tab" 
-                  className='h-96 overflow-y-auto'
-                >
-                  <div className="p-8">
-                    <ReactMarkdown className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-gray-900 prose-strong:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-700">
-                      {critique}
-                    </ReactMarkdown>
-                    {!suggestions && !loading && !hasRequestedSuggestions && (
-                      <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border border-blue-200/50 text-center">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                          </svg>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">Ready for the next level?</h3>
-                        <p className="text-gray-600 mb-6">Get personalized improvement suggestions tailored to your photo</p>
-                        <button
-                          onClick={handleGetSuggestions}
-                          className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                          aria-label="Get Improvement Suggestions"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                          Get AI Suggestions
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'suggestions' && (
-                <div 
-                  id="suggestions-panel" 
-                  role="tabpanel" 
-                  aria-labelledby="suggestions-tab" 
-                  className='h-96 overflow-y-auto'
-                >
-                  {loading ? (
-                    <LoadingSpinner />
-                  ) : error ? (
-                    <div className="p-8">
-                      <ErrorDisplay 
-                        error={error} 
-                        onRetry={fetchSuggestions}
-                      />
-                    </div>
-                  ) : suggestions ? (
-                    <div className="p-8">
-                      <ReactMarkdown className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:text-gray-900 prose-strong:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-700">
-                        {suggestions}
-                      </ReactMarkdown>
-                    </div>
-                  ) : (
-                    <div className="p-8 text-center">
-                      <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-4">No suggestions yet</h3>
-                      <p className="text-gray-600 mb-8">Click below to get personalized improvement recommendations</p>
-                      <button
-                        onClick={handleGetSuggestions}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                        aria-label="Get Improvement Suggestions"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        Generate Suggestions
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased pb-20 print:bg-white print:p-0">
+      {/* Top Navigation Bar */}
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/80 px-6 py-3.5 print:hidden">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link to="/" className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-blue-600" />
+              ArtiSight <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">2.0</span>
+            </Link>
+            <span className="text-gray-300">|</span>
+            <span className="text-xs text-gray-500 font-medium truncate max-w-xs">
+              {summary?.title || 'Photography Critique'}
+            </span>
           </div>
 
-          {/* Enhanced Action Buttons */}
-          <div className='flex flex-wrap gap-4 justify-center lg:justify-start mt-12'>
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowResources(!showResources)}
-              className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300 ${
-                showResources 
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white'
-                  : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white'
-              }`}
-              aria-pressed={showResources}
-              aria-label={showResources ? "Hide Resources" : "Show Resources"}
+              onClick={handleCopyReport}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+              title="Copy markdown critique"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-              {showResources ? 'Hide Resources' : 'Explore Resources'}
+              <Copy size={14} />
+              {copied ? 'Copied!' : 'Copy Report'}
             </button>
-            
+            <button
+              onClick={handlePrint}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+              title="Print / Save PDF"
+            >
+              <Printer size={14} />
+              Print / PDF
+            </button>
             <button
               onClick={handleNewPhoto}
-              className="inline-flex items-center gap-3 border-2 border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-8 py-4 rounded-full font-semibold text-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 bg-white/80 backdrop-blur-sm"
-              aria-label="Submit Another Photo"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Submit Another Photo
+              <Upload size={14} />
+              New Photo
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Enhanced Resources Section */}
-      {showResources && (
-        <div className="border-t border-gray-200/50 bg-white/30 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto">
-            <Resources critique={critique} suggestions={suggestions} />
+      {/* Main Workspace Layout */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Image, Composition Overlays, EXIF & OpenCV Signals */}
+          <div className="lg:col-span-5 flex flex-col items-center">
+            {/* Interactive Composition Preview */}
+            <CompositionOverlay imageSrc={uploadedImage} altText={summary?.title} />
+
+            {/* Image Specs Badge */}
+            <div className="w-full mt-3 flex items-center justify-between text-xs text-gray-500 px-2">
+              <span>{image?.width} × {image?.height} px ({image?.aspectRatio})</span>
+              <span>Inference: {metadata?.processingTimeMs ? `${(metadata.processingTimeMs / 1000).toFixed(1)}s` : 'N/A'}</span>
+            </div>
+
+            {/* Technical Computer Vision & EXIF Panel */}
+            <TechnicalAnalysisPanel cvMetrics={cvMetrics} exifData={exifData} />
+          </div>
+
+          {/* Right Column: Structured Rubric Scores, Strengths, Weaknesses, Exercises, Resources */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Overall Score & Title Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-100">
+                <div>
+                  <span className="text-xs font-bold tracking-wider uppercase text-blue-600 block mb-1">
+                    Artistic & Technical Evaluation
+                  </span>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
+                    {summary?.title}
+                  </h1>
+                </div>
+
+                {/* Score Pill */}
+                <div className="flex items-center gap-3 shrink-0 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/70 p-3.5 rounded-2xl">
+                  <Award className="w-7 h-7 text-blue-600 shrink-0" />
+                  <div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-extrabold text-gray-900">
+                        {scores?.overall?.value}
+                      </span>
+                      <span className="text-xs text-gray-500 font-semibold">/10</span>
+                    </div>
+                    <span className="text-[11px] text-blue-700 font-medium uppercase tracking-wider block">
+                      Overall Score
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Headline Rationale */}
+              <p className="mt-4 text-sm text-gray-700 leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-gray-100">
+                {scores?.overall?.rationale}
+              </p>
+
+              {/* Initial Observations */}
+              {summary?.observations && summary.observations.length > 0 && (
+                <div className="mt-5">
+                  <h3 className="text-xs font-bold tracking-wider uppercase text-gray-500 mb-2.5">
+                    Visual Observations
+                  </h3>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    {summary.observations.map((obs, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5" />
+                        <span>{obs}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            {/* Rubric Category Scores */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
+              <h2 className="text-base font-bold text-gray-900 mb-4 uppercase tracking-wide text-xs">
+                Rubric Dimension Breakdown
+              </h2>
+              <div className="space-y-3.5">
+                {scoreCategories.map(({ key, label, data, color }) => {
+                  const isExpanded = expandedScore === key;
+                  return (
+                    <div
+                      key={key}
+                      className="border border-gray-100 rounded-2xl p-3.5 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                    >
+                      <div
+                        onClick={() => toggleScoreRationale(key)}
+                        className="flex items-center justify-between cursor-pointer select-none"
+                      >
+                        <div className="flex-1 mr-4">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <span className="font-semibold text-gray-800 text-sm">{label}</span>
+                            <span className="font-mono text-sm font-bold text-gray-900">
+                              {data?.value} / 10
+                            </span>
+                          </div>
+                          {/* Progress bar */}
+                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-700 ${color}`}
+                              style={{ width: `${(data?.value || 0) * 10}%` }}
+                            />
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors"
+                          aria-label={`Toggle ${label} rationale`}
+                        >
+                          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </button>
+                      </div>
+
+                      {/* Expandable rationale */}
+                      {isExpanded && (
+                        <p className="mt-3 text-xs text-gray-600 leading-relaxed border-t border-gray-200/60 pt-2.5">
+                          {data?.rationale}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Strengths & Improvements Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Strengths */}
+              <div className="bg-emerald-50/60 rounded-3xl p-6 border border-emerald-200/60 shadow-sm">
+                <div className="flex items-center gap-2 mb-3 text-emerald-800">
+                  <CheckCircle2 size={18} className="shrink-0" />
+                  <h3 className="font-bold text-sm tracking-wide uppercase">Core Strengths</h3>
+                </div>
+                <ul className="space-y-2 text-xs text-emerald-950 leading-relaxed">
+                  {summary?.strengths?.map((str, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0 mt-1.5" />
+                      <span>{str}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Improvements */}
+              <div className="bg-amber-50/60 rounded-3xl p-6 border border-amber-200/60 shadow-sm">
+                <div className="flex items-center gap-2 mb-3 text-amber-800">
+                  <AlertTriangle size={18} className="shrink-0" />
+                  <h3 className="font-bold text-sm tracking-wide uppercase">Growth Areas</h3>
+                </div>
+                <ul className="space-y-2 text-xs text-amber-950 leading-relaxed">
+                  {summary?.improvements?.map((imp, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0 mt-1.5" />
+                      <span>{imp}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Hands-On Practice Exercises */}
+            {recommendations && recommendations.length > 0 && (
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
+                <div className="flex items-center gap-2 mb-5">
+                  <Award className="w-5 h-5 text-indigo-600" />
+                  <h2 className="text-base font-bold text-gray-900 tracking-wide uppercase text-xs">
+                    Personalized Practice Assignments
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  {recommendations.map((rec, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-indigo-100 rounded-2xl p-5 bg-gradient-to-br from-indigo-50/40 via-white to-blue-50/20"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">
+                          {rec.learning_topic || 'Practice'}
+                        </span>
+                        <span className="text-xs font-semibold text-gray-400">Exercise #{idx + 1}</span>
+                      </div>
+
+                      <h4 className="font-bold text-gray-900 text-sm mb-2">{rec.problem}</h4>
+                      <p className="text-xs text-gray-600 mb-3 italic">
+                        <strong>Evidence:</strong> {rec.evidence}
+                      </p>
+
+                      <div className="bg-white/80 p-3.5 rounded-xl border border-indigo-100/70 mb-3 text-xs space-y-2 text-gray-700">
+                        <div>
+                          <strong className="text-indigo-950 block mb-0.5">Recommended Adjustment:</strong>
+                          {rec.recommendation}
+                        </div>
+                        <div>
+                          <strong className="text-indigo-950 block mb-0.5">Shooting Assignment:</strong>
+                          <span className="font-medium text-indigo-900">{rec.exercise}</span>
+                        </div>
+                      </div>
+
+                      <div className="text-[11px] text-gray-500 font-medium">
+                        <strong>Target Skill Outcome:</strong> {rec.expected_outcome}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Curated & Discovered Learning Resources */}
+            {resources && resources.length > 0 && (
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
+                <div className="flex items-center gap-2 mb-5">
+                  <BookOpen className="w-5 h-5 text-blue-600" />
+                  <div>
+                    <h2 className="text-base font-bold text-gray-900 tracking-wide uppercase text-xs">
+                      Curated Educational Resources
+                    </h2>
+                    <p className="text-xs text-gray-500">
+                      Verified photography guides and tutorials tailored to your weaknesses
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {resources.map((res, idx) => (
+                    <a
+                      key={idx}
+                      href={res.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col justify-between p-4 rounded-2xl border border-gray-200/80 hover:border-blue-500 hover:shadow-md transition-all bg-white"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between text-xs text-blue-600 font-semibold mb-2">
+                          <span className="uppercase tracking-wider text-[10px] px-2 py-0.5 rounded bg-blue-50">
+                            {res.sourceType || 'Guide'}
+                          </span>
+                          <span className="text-gray-400 group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                            {res.displayLink}
+                            <ExternalLink size={12} />
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors line-clamp-2 mb-1.5">
+                          {res.title}
+                        </h4>
+                        <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed">
+                          {res.snippet}
+                        </p>
+                      </div>
+
+                      <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+                        <span>{res.searchQuery ? `Topic: ${res.searchQuery}` : 'Resource'}</span>
+                        <span className="font-semibold text-blue-600 group-hover:translate-x-0.5 transition-transform">
+                          Read Guide →
+                        </span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </main>
     </div>
   );
-});
-
-Feedback.displayName = 'Feedback';
+};
 
 export default Feedback;

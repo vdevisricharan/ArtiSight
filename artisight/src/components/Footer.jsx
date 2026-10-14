@@ -1,92 +1,72 @@
-import { Instagram, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Github, Globe, Sparkles, BookOpen } from 'lucide-react';
 
 const Footer = () => {
-  const socialLinks = [
-    { icon: <Instagram size={24} />, href: "https://instagram.com", label: "Instagram" },
-    { icon: <Twitter size={24} />, href: "https://x.com", label: "Twitter" },
-    { icon: <Facebook size={24} />, href: "https://facebook.com", label: "Facebook" },
-    { icon: <Linkedin size={24} />, href: "https://linkedin.com", label: "LinkedIn" }
-  ];
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
-
   return (
-    <footer className="bg-gray-900 text-white py-16 shadow-inner" role="contentinfo">
-      <div className="container mx-auto px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800" role="contentinfo">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <h3 className="font-bold text-xl mb-6 text-white">About ArtiSight</h3>
-          <p className="text-gray-300 leading-relaxed">
-            Empowering photographers worldwide by providing AI-powered tools, insights, and resources to elevate their craft.
+          <div className="flex items-center gap-2 text-white font-bold text-lg mb-3">
+            <Sparkles className="w-5 h-5 text-blue-400" />
+            ArtiSight 2.0
+          </div>
+          <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Applied AI and computer vision photography critique platform. Providing objective rubric scores, exposure histograms, and personalized practice exercises.
           </p>
         </div>
-        
+
         <div>
-          <h3 className="font-bold text-xl mb-6 text-white">Quick Links</h3>
-          <ul className="space-y-3">
+          <h3 className="font-semibold text-sm text-white uppercase tracking-wider mb-3">
+            Engineering & Project Links
+          </h3>
+          <ul className="space-y-2 text-xs">
             <li>
-              <button 
-                onClick={() => scrollToSection('how-it-works')}
-                className="text-gray-300 hover:text-primary transition-colors duration-200 focus:outline-none focus:text-primary"
+              <a
+                href="https://github.com/vdevisricharan/ArtiSight"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex items-center gap-2"
               >
-                How it Works
-              </button>
+                <Github size={14} />
+                GitHub Repository
+              </a>
             </li>
             <li>
-              <button 
-                onClick={() => scrollToSection('examples')}
-                className="text-gray-300 hover:text-primary transition-colors duration-200 focus:outline-none focus:text-primary"
+              <a
+                href="https://vdevisricharan.netlify.app/project/artisight"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex items-center gap-2"
               >
-                Examples
-              </button>
+                <Globe size={14} />
+                Portfolio Case Study
+              </a>
             </li>
             <li>
-              <button 
-                onClick={() => scrollToSection('community')}
-                className="text-gray-300 hover:text-primary transition-colors duration-200 focus:outline-none focus:text-primary"
+              <a
+                href="https://artisight.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex items-center gap-2"
               >
-                Community
-              </button>
+                <BookOpen size={14} />
+                Live Application
+              </a>
             </li>
           </ul>
         </div>
-        
+
         <div>
-          <h3 className="font-bold text-xl mb-6 text-white">Follow Us</h3>
-          <div className="flex gap-4">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.href}
-                className="text-gray-300 hover:text-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg p-2"
-                aria-label={social.label}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {social.icon}
-              </a>
-            ))}
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="font-bold text-xl mb-6 text-white">Contact Us</h3>
-          <p className="text-gray-300 leading-relaxed">
-            Feel free to reach out via email or social media for any inquiries about improving your photography.
+          <h3 className="font-semibold text-sm text-white uppercase tracking-wider mb-3">
+            Technical Privacy
+          </h3>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Photographs are processed statelessly in memory and temporary storage. GPS metadata is automatically stripped, and images are never stored permanently or used for model training.
           </p>
         </div>
       </div>
-      <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-        <p className="text-gray-400 text-sm tracking-wide">
-          © {new Date().getFullYear()} ArtiSight. All rights reserved.
-        </p>
+
+      <div className="border-t border-slate-800 mt-10 pt-6 text-center text-xs text-slate-500">
+        <p>© {new Date().getFullYear()} ArtiSight 2.0 • Devi Sri Charan Valupadasu</p>
       </div>
     </footer>
   );

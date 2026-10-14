@@ -4,101 +4,107 @@ import { uploadImage, feedbackImage, resourcesImage } from '../assets';
 
 const Example = () => {
   const [activeStep, setActiveStep] = useState(0);
-  
+
   const steps = [
-    { 
-      id: 1, 
-      title: 'Upload Your Photo', 
-      description: 'Drag and drop your photo or click to upload. Press the \'Get AI Critique\' button to start.',
-      icon: <Upload className="w-6 h-6" />,
-      image: uploadImage
+    {
+      id: 1,
+      title: '1. Select & Optimize Image',
+      description: 'Drag and drop your photograph. Client-side processing verifies dimensions and handles safe orientation normalization.',
+      icon: <Upload className="w-5 h-5" />,
+      image: uploadImage,
     },
-    { 
-      id: 2, 
-      title: 'Receive Feedback', 
-      description: 'Get detailed feedback and suggestions on how to improve your photography skills.',
-      icon: <Brain className="w-6 h-6" />,
-      image: feedbackImage
+    {
+      id: 2,
+      title: '2. Review Structured Critique',
+      description: 'Explore the 6-dimension rubric scores, interactive composition guides, EXIF parameters, and OpenCV exposure histograms.',
+      icon: <Brain className="w-5 h-5" />,
+      image: feedbackImage,
     },
-    { 
-      id: 3, 
-      title: 'Search for Resources', 
-      description: 'Find tutorials, articles, and other materials to enhance your skills.',
-      icon: <BookOpen className="w-6 h-6" />,
-      image: resourcesImage
-    }
+    {
+      id: 3,
+      title: '3. Practice Hands-On Exercises',
+      description: 'Complete tailored shooting assignments and study curated photography guides matched directly to your detected weaknesses.',
+      icon: <BookOpen className="w-5 h-5" />,
+      image: resourcesImage,
+    },
   ];
 
   return (
-    <section 
-      id="examples" 
-      className="lg:mx-12 px-4 sm:px-6 lg:px-8 py-16 rounded-3xl mx-4"
+    <section
+      id="examples"
+      className="max-w-7xl mx-auto px-6 py-16 lg:px-12"
       aria-labelledby="examples-heading"
     >
-      <h2 
-        id="examples-heading"
-        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent"
-      >
-        How to Use the Tool
-      </h2>
-      <div className='flex flex-col lg:flex-row items-center gap-12'>
-        <div className="lg:flex-1">
-          {steps.map((step, index) => (
-            <div 
-              key={step.id} 
-              onClick={() => setActiveStep(index)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setActiveStep(index);
-                }
-              }}
-              className={`cursor-pointer p-6 rounded-xl transition-all duration-300 mb-4 ${
-                activeStep === index 
-                  ? 'bg-white shadow-xl border-l-4 border-primary scale-105'
-                  : 'hover:bg-white/70'
-              }`}
-              role="button"
-              tabIndex={0}
-              aria-pressed={activeStep === index}
-              aria-describedby={`step-${index}-description`}
-            >
-              <div className="flex items-center gap-4 mb-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  activeStep === index 
-                    ? 'bg-primary text-white' 
-                    : 'bg-gray-200 text-gray-600'
-                }`}>
-                  {step.icon}
-                </div>
-                <h3 className={`font-bold text-lg md:text-xl bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent ${
-                  activeStep === index ? '' : 'opacity-80'
-                }`}>
-                  {step.title}
-                </h3>
-              </div>
-              <p 
-                id={`step-${index}-description`}
-                className={`text-sm md:text-base leading-relaxed ml-14 text-gray-700`}
+      <div className="text-center max-w-2xl mx-auto mb-14">
+        <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-2">
+          Interactive Experience
+        </span>
+        <h2
+          id="examples-heading"
+          className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight"
+        >
+          Visualizing the Critique Journey
+        </h2>
+        <p className="text-sm md:text-base text-gray-600 mt-3 leading-relaxed">
+          See how an uploaded photo transforms into an actionable, explainable learning path.
+        </p>
+      </div>
+
+      <div className="flex flex-col lg:flex-row items-center gap-10">
+        {/* Step Selector List */}
+        <div className="lg:w-1/2 space-y-4 w-full">
+          {steps.map((step, index) => {
+            const isActive = activeStep === index;
+            return (
+              <div
+                key={step.id}
+                onClick={() => setActiveStep(index)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveStep(index);
+                  }
+                }}
+                className={`cursor-pointer p-6 rounded-2xl transition-all duration-300 border ${
+                  isActive
+                    ? 'bg-white shadow-xl border-blue-500 scale-[1.02]'
+                    : 'bg-white/60 hover:bg-white border-gray-100 hover:border-gray-200'
+                }`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isActive}
               >
-                {step.description}
-              </p>
-            </div>
-          ))}
-        </div>
-        <div className="lg:flex-1">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl">
-            <div className="aspect-video rounded-xl flex items-center justify-center">
-              <div className="text-center">
-                <div className="mx-auto rounded-full flex items-center justify-center">
-                  <img src={steps[activeStep].image} alt=''/>
+                <div className="flex items-center gap-4 mb-2">
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
+                      isActive ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500'
+                    }`}
+                  >
+                    {step.icon}
+                  </div>
+                  <h3 className="font-bold text-gray-900 text-base">
+                    {step.title}
+                  </h3>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-800 mb-2">
-                  Step {activeStep + 1}
-                </h4>
-                <p className="text-gray-600 text-sm">
-                  {steps[activeStep].title}
+                <p className="text-xs text-gray-600 leading-relaxed pl-13">
+                  {step.description}
                 </p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Visual Preview Card */}
+        <div className="lg:w-1/2 w-full">
+          <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="aspect-[16/10] bg-slate-900 rounded-2xl flex items-center justify-center overflow-hidden relative">
+              <img
+                src={steps[activeStep].image}
+                alt={steps[activeStep].title}
+                className="w-full h-full object-cover transition-opacity duration-300"
+              />
+              <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white border border-white/20">
+                Step {activeStep + 1}: {steps[activeStep].title}
               </div>
             </div>
           </div>

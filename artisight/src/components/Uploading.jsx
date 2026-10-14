@@ -1,519 +1,401 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { CheckCircle, X, Upload, Image as ImageIcon } from '@phosphor-icons/react';
-import { useNavigate } from 'react-router-dom';
-import { cameraImage } from '../assets';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUploadedImage, setCritique, selectUploadedImage } from '../redux/imageSlice';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import {
+  Upload,
+  Image as ImageIcon,
+  CheckCircle2,
+  AlertCircle,
+  X,
+  Sparkles,
+  ArrowRight,
+  RefreshCw,
+  Sliders,
+  ShieldCheck,
+} from 'lucide-react';
+import {
+  setUploadedImage,
+  setAnalysisResult,
+  setAnalysisPhase,
+  setUploadProgress,
+  setError,
+  selectAnalysisPhase,
+  selectUploadProgress,
+  selectError,
+  resetImageState,
+} from '../redux/imageSlice';
+import { optimizeImage } from '../utils/imageOptimizer';
 
-// Constants
-const VALID_FILE_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
-const MAX_FILE_SIZE_MB = 10;
-const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024;
-const SUPPORTED_FORMATS = 'JPEG, PNG, WebP';
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const MAX_FILE_SIZE_BYTES = 16 * 1024 * 1024; // 16MB
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-// Utility functions
-const isValidFileType = (fileType) => VALID_FILE_TYPES.includes(fileType.toLowerCase());
-
-const formatFileSize = (bytes) => {
-  if (bytes === 0) return '0 Bytes';
+const formatBytes = (bytes) => {
+  if (bytes === 0) return '0 B';
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ['B', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
-
-const FilePreview = ({ file, onRemove, uploadProgress, uploaded }) => (
-  <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
-    <div className="flex items-center justify-between mb-4">
-      <div className="flex items-center space-x-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
-          <ImageIcon size={24} className="text-blue-600" />
-        </div>
-        <div>
-          <p className="font-semibold text-gray-900">{file.name}</p>
-          <p className="text-sm text-gray-500">{formatFileSize(file.size)}</p>
-        </div>
-      </div>
-      {!uploaded && (
-        <button
-          onClick={onRemove}
-          className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-200"
-          aria-label="Remove file"
-        >
-          <X size={20} />
-        </button>
-      )}
-    </div>
-
-    {/* Enhanced Progress Bar */}
-    <div className="space-y-2">
-      <div className="flex items-center justify-between text-sm font-medium">
-        <span className={uploaded ? 'text-green-600' : 'text-blue-600'}>
-          {uploaded ? '✓ Complete' : 'Uploading...'}
-        </span>
-        <span className="text-gray-600">{uploadProgress}%</span>
-      </div>
-      <div
-        className="bg-gray-200 rounded-full h-3 overflow-hidden"
-        role="progressbar"
-        aria-valuenow={uploadProgress}
-        aria-valuemin={0}
-        aria-valuemax={100}
-      >
-        <div
-          className={`h-full rounded-full transition-all duration-500 ${uploaded
-            ? 'bg-gradient-to-r from-green-500 to-emerald-500'
-            : 'bg-gradient-to-r from-blue-500 to-purple-500'
-            }`}
-          style={{ width: `${uploadProgress}%` }}
-        />
-      </div>
-    </div>
-  </div>
-);
-
-FilePreview.propTypes = {
-  file: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    size: PropTypes.number.isRequired,
-    type: PropTypes.string,
-  }).isRequired,
-  onRemove: PropTypes.func.isRequired,
-  uploadProgress: PropTypes.number.isRequired,
-  uploaded: PropTypes.bool.isRequired,
-};
-
-// Drag and Drop Zone Component
-const DropZone = ({ isDragActive, onBrowseClick, children }) => (
-  <div
-    className={`
-      border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-300
-      ${isDragActive
-        ? 'border-blue-500 bg-blue-50/50 scale-105 shadow-lg'
-        : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50/50 hover:shadow-md'
-      }
-    `}
-  >
-    <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${isDragActive ? 'bg-blue-100' : 'bg-gray-100'
-      }`}>
-      <Upload
-        size={32}
-        className={`${isDragActive ? 'text-blue-500' : 'text-gray-400'}`}
-      />
-    </div>
-    <div className="space-y-3">
-      <p className="text-xl font-semibold text-gray-800">
-        {isDragActive ? 'Drop your image here' : 'Drag & drop your image here'}
-      </p>
-      <p className="text-gray-500">or</p>
-      <button
-        type="button"
-        onClick={onBrowseClick}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-      >
-        <ImageIcon size={20} />
-        Browse Files
-      </button>
-    </div>
-    <p className="text-sm text-gray-500 mt-6">
-      Supports {SUPPORTED_FORMATS} up to {MAX_FILE_SIZE_MB}MB
-    </p>
-    {children}
-  </div>
-);
-
-DropZone.propTypes = {
-  isDragActive: PropTypes.bool.isRequired,
-  onBrowseClick: PropTypes.func.isRequired,
-  children: PropTypes.node,
+  return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
 };
 
 const Uploading = () => {
-  const [file, setFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploaded, setUploaded] = useState(false);
-  const [fileError, setFileError] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [isDragActive, setIsDragActive] = useState(false);
-
   const dispatch = useDispatch();
-  const uploadedImage = useSelector(selectUploadedImage);
   const navigate = useNavigate();
-  const inputRef = useRef();
-  const uploadIntervalRef = useRef();
 
-  // Cleanup on unmount
+  const phase = useSelector(selectAnalysisPhase);
+  const uploadProgress = useSelector(selectUploadProgress);
+  const errorMessage = useSelector(selectError);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [imageMetadata, setImageMetadata] = useState(null);
+  const [isDragActive, setIsDragActive] = useState(false);
+  const [uploadController, setUploadController] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  // Clean up object URLs
   useEffect(() => {
     return () => {
-      if (uploadIntervalRef.current) {
-        clearInterval(uploadIntervalRef.current);
-      }
-      // Clean up object URLs to prevent memory leaks
-      if (uploadedImage && uploadedImage.startsWith('blob:')) {
-        URL.revokeObjectURL(uploadedImage);
+      if (previewUrl && previewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl);
       }
     };
-  }, [uploadedImage]);
+  }, [previewUrl]);
 
-  // Enhanced upload simulation with more realistic progress
-  const simulateFileUpload = useCallback((newFile) => {
-    let progress = 0;
-    setUploadProgress(0);
+  const handleFileSelection = useCallback(async (file) => {
+    dispatch(setError(null));
 
-    // Clear any existing interval
-    if (uploadIntervalRef.current) {
-      clearInterval(uploadIntervalRef.current);
+    // 1. MIME type validation
+    if (!ALLOWED_MIME_TYPES.includes(file.type.toLowerCase())) {
+      dispatch(setError('Unsupported format. Please upload a JPEG, PNG, or WebP photograph.'));
+      return;
     }
 
-    uploadIntervalRef.current = setInterval(() => {
-      progress += Math.random() * 15; // Variable progress increments
-      progress = Math.min(progress, 100);
-      setUploadProgress(Math.round(progress));
+    // 2. File size validation
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      dispatch(setError(`File is too large (${formatBytes(file.size)}). Maximum supported size is 16MB.`));
+      return;
+    }
 
-      if (progress >= 100) {
-        clearInterval(uploadIntervalRef.current);
-        setUploaded(true);
-        const imageSrc = URL.createObjectURL(newFile);
-        dispatch(setUploadedImage(imageSrc));
-      }
-    }, 200);
+    // Create local preview URL
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+    setSelectedFile(file);
+
+    // Read natural dimensions
+    const img = new Image();
+    img.onload = () => {
+      setImageMetadata({
+        width: img.width,
+        height: img.height,
+        size: file.size,
+        type: file.type,
+      });
+    };
+    img.src = objectUrl;
   }, [dispatch]);
 
-  const handleDragEnter = useCallback((e) => {
+  const handleDrop = useCallback(
+    (e) => {
+      e.preventDefault();
+      setIsDragActive(false);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelection(e.dataTransfer.files[0]);
+      }
+    },
+    [handleFileSelection]
+  );
+
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      setIsDragActive(true);
-    }
+    setIsDragActive(true);
   }, []);
 
   const handleDragLeave = useCallback((e) => {
     e.preventDefault();
-    e.stopPropagation();
     setIsDragActive(false);
   }, []);
 
-  const handleDragOver = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }, []);
+  const handleRemoveImage = useCallback(() => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setImageMetadata(null);
+    dispatch(resetImageState());
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [dispatch]);
 
-  const handleDrop = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragActive(false);
+  const handleStartAnalysis = useCallback(async () => {
+    if (!selectedFile) return;
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const newFile = e.dataTransfer.files[0];
+    dispatch(setError(null));
+    dispatch(setAnalysisPhase('preparing'));
 
-      // Validate file type
-      if (!isValidFileType(newFile.type)) {
-        setFileError(`Unsupported file format. Please upload ${SUPPORTED_FORMATS} images.`);
-        return;
+    let fileToUpload = selectedFile;
+
+    // 1. Client-Side Image Pre-Processing & Optimization
+    try {
+      const optimizationResult = await optimizeImage(selectedFile);
+      if (optimizationResult.wasOptimized) {
+        fileToUpload = optimizationResult.file;
       }
-
-      // Validate file size
-      if (newFile.size > MAX_FILE_SIZE) {
-        setFileError(`File is too large (${formatFileSize(newFile.size)}). Maximum size is ${MAX_FILE_SIZE_MB}MB.`);
-        return;
-      }
-
-      // Check if file is actually an image by trying to create an image object
-      const img = new Image();
-      const objectUrl = URL.createObjectURL(newFile);
-
-      img.onload = () => {
-        URL.revokeObjectURL(objectUrl);
-        setFile(newFile);
-        simulateFileUpload(newFile);
-      };
-
-      img.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        setFileError('Invalid image file. Please select a valid image.');
-      };
-
-      img.src = objectUrl;
-    }
-  }, [simulateFileUpload]);
-
-  // Validate and set file helper
-  const validateAndSetFile = useCallback((newFile) => {
-    // Validate file type
-    if (!isValidFileType(newFile.type)) {
-      setFileError(`Unsupported file format. Please upload ${SUPPORTED_FORMATS} images.`);
-      return;
+    } catch (e) {
+      console.warn('Client optimization skipped, using original file:', e);
     }
 
-    // Validate file size
-    if (newFile.size > MAX_FILE_SIZE) {
-      setFileError(`File is too large (${formatFileSize(newFile.size)}). Maximum size is ${MAX_FILE_SIZE_MB}MB.`);
-      return;
-    }
-
-    // Check if file is actually an image by trying to create an image object
-    const img = new window.Image();
-    const objectUrl = URL.createObjectURL(newFile);
-
-    img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      setFile(newFile);
-      simulateFileUpload(newFile);
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      setFileError('Invalid image file. Please select a valid image.');
-    };
-
-    img.src = objectUrl;
-  }, [simulateFileUpload]);
-
-  // File input change handler
-  const handleFileChange = useCallback((e) => {
-    const newFile = e.target.files[0];
-    if (newFile) {
-      validateAndSetFile(newFile);
-    }
-  }, [validateAndSetFile]);
-
-  // Remove file handler
-  const handleRemoveFile = useCallback(() => {
-    setFile(null);
-    setUploaded(false);
-    setUploadProgress(0);
-    setFileError('');
-    if (uploadIntervalRef.current) {
-      clearInterval(uploadIntervalRef.current);
-    }
-    if (inputRef.current) {
-      inputRef.current.value = '';
-    }
-    // Clean up the object URL
-    if (uploadedImage && uploadedImage.startsWith('blob:')) {
-      URL.revokeObjectURL(uploadedImage);
-      dispatch(setUploadedImage(null));
-    }
-  }, [uploadedImage, dispatch]);
-
-  // Enhanced form submit with better error handling
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-
-    if (!file) {
-      setFileError('Please select a file to upload.');
-      return;
-    }
-
-    if (!uploaded) {
-      setFileError('Please wait for the file to finish uploading.');
-      return;
-    }
-
-    setIsGenerating(true);
-    setFileError('');
+    // 2. Network Upload Phase
+    dispatch(setAnalysisPhase('uploading'));
+    dispatch(setUploadProgress(0));
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', fileToUpload);
+
+    const controller = new AbortController();
+    setUploadController(controller);
+
+    // Save image preview in Redux for the critique screen
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      dispatch(setUploadedImage(reader.result));
+    };
+    reader.readAsDataURL(fileToUpload);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/upload`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          timeout: 60000, // 60 second timeout
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            console.log('Upload progress:', percentCompleted);
-          },
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/v2/analyze`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        signal: controller.signal,
+        timeout: 120000, // 120 second timeout for deep multimodal analysis
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            dispatch(setUploadProgress(percent));
+            if (percent >= 100) {
+              dispatch(setAnalysisPhase('analyzing'));
+            }
+          }
+        },
+      });
 
-      // Updated to match new API response structure
-      const { critique } = response.data;
-      if (!critique) {
-        throw new Error('No critique received from server');
+      const analysisData = response.data;
+      if (!analysisData || !analysisData.summary) {
+        throw new Error('Server returned an invalid analysis format.');
       }
 
-      dispatch(setCritique(critique));
+      dispatch(setAnalysisResult(analysisData));
       navigate('/feedback');
-    } catch (error) {
-      let errorMessage = 'Failed to upload image. Please try again.';
-
-      if (error.code === 'ECONNABORTED') {
-        errorMessage = 'Request timed out. Please try again with a smaller image.';
-      } else if (error.response?.status === 413) {
-        errorMessage = 'File is too large for the server. Please try a smaller image.';
-      } else if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.message) {
-        errorMessage = error.message;
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        dispatch(setError('Analysis was cancelled.'));
+      } else {
+        const errorMsg =
+          err.response?.data?.error ||
+          err.message ||
+          'Failed to complete photography analysis. Please verify your connection and try again.';
+        dispatch(setError(errorMsg));
       }
-
-      setFileError(errorMessage);
     } finally {
-      setIsGenerating(false);
+      setUploadController(null);
     }
-  }, [file, uploaded, dispatch, navigate]);
+  }, [selectedFile, dispatch, navigate]);
 
-  // Browse button click handler
-  const handleBrowseClick = useCallback(() => {
-    inputRef.current?.click();
-  }, []);
+  const handleCancel = useCallback(() => {
+    if (uploadController) {
+      uploadController.abort();
+    }
+    dispatch(setAnalysisPhase('idle'));
+    dispatch(setUploadProgress(0));
+  }, [uploadController, dispatch]);
+
+  const isProcessing = phase === 'preparing' || phase === 'uploading' || phase === 'analyzing';
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
-      <div className='flex flex-col lg:flex-row items-start justify-center p-8 lg:px-20 max-w-7xl mx-auto gap-12'>
-          {/* Image Preview Section */}
-          <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
-            <div className="text-center lg:text-left mb-8">
-              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
-                Your Vision
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0 mb-8"></div>
+    <div className="min-h-screen bg-slate-50 text-slate-800 py-10 px-4 sm:px-6 lg:px-8">
+      {/* Top Breadcrumb */}
+      <div className="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <Link to="/" className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1.5">
+          ← Back to Overview
+        </Link>
+        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700 shadow-sm">
+          <ShieldCheck size={14} className="text-emerald-600" />
+          Zero Data Retention • GPS Location Stripped
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-gray-100">
+        <div className="text-center max-w-xl mx-auto mb-8">
+          <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-2">
+            AI Critique Workspace
+          </span>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            Upload Your Photograph
+          </h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Receive structured 6-dimension evaluation, OpenCV exposure & sharpness metrics, and personalized shooting assignments.
+          </p>
+        </div>
+
+        {/* Error Alert */}
+        {errorMessage && (
+          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3 text-red-800 text-sm">
+            <AlertCircle size={20} className="shrink-0 mt-0.5 text-red-600" />
+            <div className="flex-1">
+              <strong className="font-semibold block">Upload Notice</strong>
+              <span>{errorMessage}</span>
+            </div>
+            <button
+              onClick={() => dispatch(setError(null))}
+              className="text-red-500 hover:text-red-700"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+
+        {/* Drag and Drop Zone or Preview */}
+        {!selectedFile ? (
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
+            className={`border-2 border-dashed rounded-3xl p-10 sm:p-14 text-center cursor-pointer transition-all duration-300 ${
+              isDragActive
+                ? 'border-blue-500 bg-blue-50/50 scale-[1.01]'
+                : 'border-gray-200 hover:border-blue-400 hover:bg-slate-50/60'
+            }`}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".jpg,.jpeg,.png,.webp"
+              onChange={(e) => {
+                if (e.target.files?.[0]) handleFileSelection(e.target.files[0]);
+              }}
+              className="hidden"
+            />
+            <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-sm">
+              <Upload size={28} />
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-1">
+              Drag and drop your image here
+            </h3>
+            <p className="text-sm text-gray-500 mb-6">
+              or <span className="text-blue-600 font-semibold underline underline-offset-2">browse files</span> from your device
+            </p>
+            <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+              <span>Supports JPEG, PNG, WebP</span>
+              <span>•</span>
+              <span>Up to 16 MB</span>
+              <span>•</span>
+              <span>Client-side optimization</span>
+            </div>
+          </div>
+        ) : (
+          /* Image Selected / Preview State */
+          <div className="space-y-6">
+            <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-gray-200 shadow-md flex items-center justify-center max-h-[460px]">
+              <img
+                src={previewUrl}
+                alt="Selected preview"
+                className="max-h-[460px] w-auto object-contain block"
+              />
+              {!isProcessing && (
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full backdrop-blur-sm transition-all"
+                  title="Remove image"
+                >
+                  <X size={18} />
+                </button>
+              )}
             </div>
 
-            <div className="max-w-md relative group">
-              {uploaded && uploadedImage ? (
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-500"></div>
-                  <div className="relative bg-white p-4 rounded-3xl shadow-2xl">
-                    <img
-                      src={uploadedImage}
-                      alt="Uploaded preview"
-                      className="rounded-2xl max-w-full h-auto shadow-lg transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                    <div className="absolute top-6 right-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full p-2 shadow-lg">
-                      <CheckCircle size={24} color="white" />
-                    </div>
-                  </div>
+            {/* Image Details Bar */}
+            <div className="flex flex-wrap items-center justify-between p-4 bg-slate-50 rounded-2xl border border-gray-200 text-xs text-gray-600 gap-3">
+              <div className="flex items-center gap-3">
+                <ImageIcon size={18} className="text-blue-600" />
+                <div>
+                  <span className="font-semibold text-gray-900 block truncate max-w-xs">
+                    {selectedFile.name}
+                  </span>
+                  <span>{formatBytes(selectedFile.size)}</span>
                 </div>
-              ) : (
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-gray-200/50 to-gray-300/50 rounded-3xl blur-lg"></div>
-                  <div className="relative bg-white p-4 rounded-3xl shadow-xl opacity-75">
-                    <img
-                      src={cameraImage}
-                      alt="Upload illustration"
-                      className="rounded-2xl max-w-full h-auto"
-                    />
-                  </div>
+              </div>
+
+              {imageMetadata && (
+                <div className="flex items-center gap-4 text-gray-500">
+                  <span>Dimensions: {imageMetadata.width} × {imageMetadata.height}px</span>
+                  <span>Format: {selectedFile.type.replace('image/', '').toUpperCase()}</span>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Upload Form Section */}
-          <div className='flex flex-col items-center lg:items-start justify-start w-full lg:w-1/2'>
-            <div className="text-center lg:text-left mb-8">
-              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 via-gray-900 to-blue-800 bg-clip-text text-transparent">
-                AI Analysis
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto lg:mx-0"></div>
-            </div>
+            {/* Processing State & Progress Indicator */}
+            {isProcessing && (
+              <div className="p-6 bg-blue-50/70 border border-blue-100 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between text-sm font-semibold text-blue-900">
+                  <span className="flex items-center gap-2">
+                    <RefreshCw size={16} className="animate-spin text-blue-600" />
+                    {phase === 'preparing' && 'Normalizing orientation and optimizing client copy...'}
+                    {phase === 'uploading' && `Uploading image (${uploadProgress}%)...`}
+                    {phase === 'analyzing' && 'Running OpenCV metrics & Gemini 2.5 Flash rubric critique...'}
+                  </span>
+                  <span className="font-mono text-xs text-blue-700">
+                    {phase === 'uploading' ? `${uploadProgress}%` : 'Processing'}
+                  </span>
+                </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 p-8">
-              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Get Instant AI Critique
-              </h1>
-              <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                Upload your photograph and receive detailed feedback with resources to improve your skills
-              </p>
-
-              <form
-                onSubmit={handleSubmit}
-                onDragEnter={handleDragEnter}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                className="space-y-6"
-              >
-                <input
-                  ref={inputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  accept={VALID_FILE_TYPES.join(',')}
-                  aria-label="Upload image file"
-                />
-
-                {!file ? (
-                  <DropZone
-                    isDragActive={isDragActive}
-                    onBrowseClick={handleBrowseClick}
+                <div className="w-full bg-blue-200/60 rounded-full h-2.5 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-300 ${
+                      phase === 'analyzing'
+                        ? 'w-full bg-gradient-to-r from-blue-500 to-indigo-600 animate-pulse'
+                        : 'bg-blue-600'
+                    }`}
+                    style={phase === 'uploading' ? { width: `${uploadProgress}%` } : undefined}
                   />
-                ) : (
-                  <FilePreview
-                    file={file}
-                    onRemove={handleRemoveFile}
-                    uploadProgress={uploadProgress}
-                    uploaded={uploaded}
-                  />
-                )}
+                </div>
 
-                {/* Error Message */}
-                {fileError && (
-                  <div className="p-6 bg-gradient-to-br from-red-50 to-pink-50 border border-red-200/50 rounded-2xl backdrop-blur-sm">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                        </svg>
-                      </div>
-                      <p className="text-red-600 font-medium" role="alert">
-                        {fileError}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                <div className="flex items-center justify-between text-xs text-blue-700">
+                  <span>Multimodal AI evaluation in progress</span>
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="text-red-600 hover:text-red-700 font-medium underline"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
 
-                {/* Submit Button */}
+            {/* Action Buttons */}
+            {!isProcessing && (
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
                 <button
-                  type="submit"
-                  disabled={!uploaded || isGenerating}
-                  className={`
-    w-full py-4 px-8 rounded-full font-semibold text-lg transition-all duration-300
-    focus:outline-none focus:ring-4 focus:ring-purple-300 transform hover:scale-105
-    ${uploaded && !isGenerating
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                    }
-  `}
-                  aria-busy={isGenerating}
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex items-center justify-center space-x-3">
-                    {isGenerating && (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    )}
-                    <span>
-                      {isGenerating ? 'Analyzing Image...' : 'Get AI Critique'}
-                    </span>
-                    {!isGenerating && (
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    )}
-                  </div>
+                  Choose Different Photo
                 </button>
-
-                {/* Help Text */}
-                {uploaded && (
-                  <div className="text-center p-4 bg-green-50/50 rounded-xl border border-green-200/50">
-                    <p className="text-green-700 font-medium">
-                      ✨ Your image is ready for AI analysis. Click the button above to get started.
-                    </p>
-                  </div>
-                )}
-              </form>
-            </div>
+                <button
+                  type="button"
+                  onClick={handleStartAnalysis}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg"
+                >
+                  <Sparkles size={16} />
+                  Analyze with ArtiSight 2.0
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            )}
           </div>
+        )}
       </div>
     </div>
   );

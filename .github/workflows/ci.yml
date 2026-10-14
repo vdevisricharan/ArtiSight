@@ -1,0 +1,65 @@
+name: ArtiSight 2.0 CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-tests:
+    name: Backend Pytest Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Pytest Test Suite
+        working-directory: ./backend
+        env:
+          GEMINI_API_KEY: mock_key_for_unit_tests
+          FLASK_ENV: testing
+        run: |
+          pytest -v
+
+  frontend-build:
+    name: Frontend Vite Production Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: ./artisight/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: ./artisight
+        run: npm ci
+
+      - name: Build Frontend Application
+        working-directory: ./artisight
+        run: npm run build
+
+  capabilities-validation:
+    name: Capability Manifest Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON Schema
+        run: |
+          python -c "import json; json.load(open('docs/project-capabilities.json'))"
