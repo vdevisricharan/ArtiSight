@@ -77,8 +77,11 @@ const JoinCommunitySection = () => {
         <div className="mt-12 text-center">
           <button
             type="button"
-            onClick={() => navigate('/upload')}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg"
+            onClick={() => {
+              navigate('/upload');
+              window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none text-white rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg cursor-pointer"
           >
             Analyze Your Photograph Now →
           </button>

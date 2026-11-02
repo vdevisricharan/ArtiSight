@@ -34,6 +34,7 @@ const Feedback = () => {
   const handleNewPhoto = useCallback(() => {
     dispatch(resetImageState());
     navigate('/upload');
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [dispatch, navigate]);
 
   const handleCopyReport = useCallback(() => {

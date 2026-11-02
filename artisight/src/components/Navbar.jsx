@@ -37,6 +37,17 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  const handleLogoClick = (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    closeMenu();
+    if (location.pathname === '/') {
+      window.location.reload();
+    } else {
+      window.location.href = '/';
+    }
+  };
+
   const scrollToSection = (sectionId) => {
     closeMenu();
 
@@ -67,7 +78,8 @@ const Navbar = () => {
       <div className="text-xl font-bold">
         <Link
           to="/"
-          className="text-gray-900 hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all duration-300 flex items-center gap-2 rounded-lg py-1"
+          onClick={handleLogoClick}
+          className="text-gray-900 hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all duration-300 flex items-center gap-2 rounded-lg py-1 cursor-pointer"
         >
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm">
             <Camera className="w-5 h-5 text-white" />
@@ -125,8 +137,9 @@ const Navbar = () => {
           onClick={() => {
             closeMenu();
             navigate('/upload');
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
           }}
-          className="sm:ml-2 inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none text-white text-xs font-semibold rounded-full shadow-sm transition-all"
+          className="sm:ml-2 inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none text-white text-xs font-semibold rounded-full shadow-sm transition-all cursor-pointer"
         >
           Analyze Photo
         </button>

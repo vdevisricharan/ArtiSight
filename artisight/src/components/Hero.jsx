@@ -32,7 +32,10 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
             <button
               type="button"
-              onClick={() => navigate('/upload')}
+              onClick={() => {
+                navigate('/upload');
+                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+              }}
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none text-white font-semibold text-sm transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer"
             >
               <Camera size={16} />
@@ -41,7 +44,11 @@ const Hero = () => {
             </button>
             <a
               href="#capabilities"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none text-slate-200 font-semibold text-sm transition-all border border-white/10"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none text-slate-200 font-semibold text-sm transition-all border border-white/10 cursor-pointer"
             >
               Explore Evaluation Rubric
             </a>

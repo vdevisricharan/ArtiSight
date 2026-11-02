@@ -25,7 +25,7 @@ const HowItWorksSection = () => {
   return (
     <section 
       id="how-it-works" 
-      className="max-w-7xl mx-auto px-6 py-16 lg:px-12"
+      className="max-w-7xl mx-auto px-6 py-16 lg:px-12 text-slate-900"
       aria-labelledby="how-it-works-heading"
     >
       <div className="text-center max-w-2xl mx-auto mb-14">
@@ -33,12 +33,12 @@ const HowItWorksSection = () => {
           Structured Learning Workflow
         </span>
         <h2 
-          id="how-it-works-heading"
-          className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight"
+          id="how-it-works-heading" 
+          className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight"
         >
           From Raw Photograph to Actionable Mastery
         </h2>
-        <p className="text-sm md:text-base text-gray-600 mt-3 leading-relaxed">
+        <p className="text-sm md:text-base text-slate-600 mt-3 leading-relaxed">
           ArtiSight guides photographers through a continuous cycle of analysis, technical explainability, and targeted practice.
         </p>
       </div>
@@ -47,15 +47,15 @@ const HowItWorksSection = () => {
         {steps.map((step, index) => (
           <div 
             key={index}
-            className="group bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            className="group bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
             <div className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${step.color} flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300`}>
               {step.icon}
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">
               {step.title}
             </h3>
-            <p className="text-xs text-gray-600 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               {step.description}
             </p>
           </div>

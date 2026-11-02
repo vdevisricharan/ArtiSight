@@ -217,30 +217,30 @@ const Uploading = () => {
   const isProcessing = phase === 'preparing' || phase === 'uploading' || phase === 'analyzing';
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-slate-50 text-slate-800 py-10 px-4 sm:px-6 lg:px-8">
       {/* Top Breadcrumb & Privacy Badge */}
       <div className="max-w-4xl mx-auto mb-8 flex flex-col sm:flex-row gap-2.5 sm:items-center sm:justify-between">
         <Link
           to="/"
-          className="text-sm font-semibold text-gray-500 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none rounded-lg p-1 transition-colors flex items-center gap-1.5 w-fit"
+          className="text-sm font-semibold text-slate-600 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none rounded-lg p-1 transition-colors flex items-center gap-1.5 w-fit"
         >
           ← Back to Overview
         </Link>
-        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700 shadow-sm w-fit">
+        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-white rounded-full border border-slate-200 text-slate-700 shadow-sm w-fit">
           <ShieldCheck size={14} className="text-emerald-600" />
           Zero Data Retention • GPS Location Stripped
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-gray-100">
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/80">
         <div className="text-center max-w-xl mx-auto mb-8">
           <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-2">
             AI Critique Workspace
           </span>
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
             Upload Your Photograph
           </h1>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-slate-600 mt-2">
             Receive structured 6-dimension evaluation, OpenCV exposure & sharpness metrics, and personalized shooting assignments.
           </p>
         </div>
@@ -314,13 +314,13 @@ const Uploading = () => {
             <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-sm">
               <Upload size={28} />
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-1">
+            <h3 className="text-lg font-bold text-slate-900 mb-1">
               Drag and drop your image here
             </h3>
-            <p className="text-sm text-gray-500 mb-6">
+            <p className="text-sm text-slate-600 mb-6">
               or <span className="text-blue-600 font-semibold underline underline-offset-2">browse files</span> from your device
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-gray-600 font-medium">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-slate-600 font-medium">
               <span>Supports JPEG, PNG, WebP</span>
               <span>•</span>
               <span>Up to 16 MB</span>
@@ -351,11 +351,11 @@ const Uploading = () => {
             </div>
 
             {/* Image Details Bar */}
-            <div className="flex flex-wrap items-center justify-between p-4 bg-slate-50 rounded-2xl border border-gray-200 text-xs text-gray-600 gap-3">
+            <div className="flex flex-wrap items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-600 gap-3">
               <div className="flex items-center gap-3">
                 <ImageIcon size={18} className="text-blue-600" />
                 <div>
-                  <span className="font-semibold text-gray-900 block truncate max-w-xs">
+                  <span className="font-semibold text-slate-900 block truncate max-w-xs">
                     {selectedFile.name}
                   </span>
                   <span>{formatBytes(selectedFile.size)}</span>
@@ -363,7 +363,7 @@ const Uploading = () => {
               </div>
 
               {imageMetadata && (
-                <div className="flex items-center gap-4 text-gray-500">
+                <div className="flex items-center gap-4 text-slate-600">
                   <span>Dimensions: {imageMetadata.width} × {imageMetadata.height}px</span>
                   <span>Format: {selectedFile.type.replace('image/', '').toUpperCase()}</span>
                 </div>
