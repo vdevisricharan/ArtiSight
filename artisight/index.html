@@ -3,16 +3,106 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ArtiSight</title>
+  <title>ArtiSight — AI Photo Critique &amp; Photography Learning Assistant</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="ArtiSight — AI Photo Critique &amp; Photography Learning Assistant" />
+  <meta name="description" content="Master photography with ArtiSight. Get instant, explainable AI photo critiques, 6-dimension rubric scoring, OpenCV exposure histograms, interactive composition overlays, and personalized practice assignments." />
+  <meta name="keywords" content="photography critique, AI photo critique, photography mentor, photo composition analysis, rule of thirds, golden ratio, exposure histogram, computer vision photography, photography practice, EXIF analyzer, image feedback" />
+  <meta name="author" content="Sri Charan" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://artisight.netlify.app/" />
+
+  <!-- PWA & Mobile Web App Meta -->
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="application-name" content="ArtiSight" />
+  <meta name="apple-mobile-web-app-title" content="ArtiSight" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Favicons and Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook / LinkedIn / Discord -->
+  <meta property="og:site_name" content="ArtiSight" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://artisight.netlify.app/" />
+  <meta property="og:title" content="ArtiSight — AI Photo Critique &amp; Photography Learning Assistant" />
+  <meta property="og:description" content="Transform raw photographs into structured, explainable critiques, deterministic computer vision signals, and personalized practice assignments using Multimodal AI." />
+  <meta property="og:image" content="https://artisight.netlify.app/og-image.png" />
+  <meta property="og:image:secure_url" content="https://artisight.netlify.app/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:image:alt" content="ArtiSight AI Photo Critique &amp; Learning Dashboard" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://artisight.netlify.app/" />
+  <meta name="twitter:title" content="ArtiSight — AI Photo Critique &amp; Photography Learning Assistant" />
+  <meta name="twitter:description" content="Transform raw photographs into structured, explainable critiques, deterministic computer vision signals, and personalized practice assignments." />
+  <meta name="twitter:image" content="https://artisight.netlify.app/og-image.png" />
+  <meta name="twitter:image:alt" content="ArtiSight AI Photo Critique &amp; Learning Dashboard" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://artisight.netlify.app/#webapp",
+        "name": "ArtiSight",
+        "alternateName": "ArtiSight 2.0",
+        "url": "https://artisight.netlify.app/",
+        "description": "Transform raw photographs into structured, explainable critiques, deterministic computer vision signals, and personalized practice assignments using Multimodal AI.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "6-Dimension Rubric Scoring (Composition, Lighting, Focus, Color, Story, Overall)",
+          "Deterministic OpenCV Exposure Histograms & Sharpness Analysis",
+          "Interactive Composition Overlays (Rule of Thirds, Golden Ratio, Diagonals)",
+          "EXIF Technical Camera and Lens Metadata Extraction",
+          "Personalized Hands-On Photography Assignments",
+          "Curated Educational Resources"
+        ],
+        "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas support.",
+        "image": "https://artisight.netlify.app/og-image.png",
+        "screenshot": "https://artisight.netlify.app/og-image.png"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://artisight.netlify.app/#website",
+        "url": "https://artisight.netlify.app/",
+        "name": "ArtiSight",
+        "description": "AI Photo Critique & Photography Learning Assistant",
+        "inLanguage": "en-US"
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
+  <noscript>
+    <div style="padding: 2rem; font-family: sans-serif; text-align: center; background: #fff8e6; color: #8a6d3b;">
+      ArtiSight requires JavaScript to run. Please enable JavaScript to analyze your photographs with AI and computer vision.
+    </div>
+  </noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

@@ -2,12 +2,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Camera, Home, ArrowLeft, AlertCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+      <SEO
+        title="Page Not Found (404)"
+        description="The page you are looking for does not exist on ArtiSight."
+        robots="noindex, nofollow"
+      />
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center px-6 py-16">

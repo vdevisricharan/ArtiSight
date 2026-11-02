@@ -1,9 +1,10 @@
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import HowItWorksSection from  '../components/HowItWorksSection';
+import HowItWorksSection from '../components/HowItWorksSection';
 import JoinCommunitySection from '../components/JoinCommunitySection';
 import Footer from '../components/Footer';
 import Example from '../components/Example';
+import SEO from '../components/SEO';
 import { lazy, Suspense } from 'react';
 
 // Lazy load heavy components
@@ -20,6 +21,11 @@ const LoadingSpinner = () => (
 const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-purple-50 flex flex-col">
+      <SEO
+        title=""
+        description="Master photography with ArtiSight. Get instant, explainable AI photo critiques, 6-dimension rubric scoring, OpenCV exposure histograms, interactive composition overlays, and personalized practice assignments."
+        canonical="https://artisight.netlify.app/"
+      />
       <Navbar />
       <main className="flex-1 flex flex-col gap-0">
         <Hero />

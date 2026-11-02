@@ -1,0 +1,9 @@
+# Robots.txt for ArtiSight (https://artisight.netlify.app/)
+User-agent: *
+Allow: /
+Allow: /upload
+Disallow: /feedback
+
+# Host and Sitemap
+Host: https://artisight.netlify.app
+Sitemap: https://artisight.netlify.app/sitemap.xml
