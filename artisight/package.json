@@ -23,7 +23,9 @@
     "redux": "^5.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@gradio/client": "^0.15.1",
+    "@playwright/test": "^1.64.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",

@@ -147,9 +147,9 @@ const TechnicalAnalysisPanel = ({ cvMetrics, exifData }) => {
             {/* Highlight Clipping */}
             <div className="bg-slate-50 p-3 rounded-xl border border-gray-100">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">Highlight Clipping</span>
+                <span className="text-xs text-gray-600 font-medium">Highlight Clipping</span>
                 <span className={`font-mono text-xs font-bold ${
-                  cvMetrics.highlightClippingPercent > 5 ? 'text-red-600' : 'text-emerald-600'
+                  cvMetrics.highlightClippingPercent > 5 ? 'text-red-700' : 'text-emerald-700'
                 }`}>
                   {cvMetrics.highlightClippingPercent}%
                 </span>
@@ -164,9 +164,9 @@ const TechnicalAnalysisPanel = ({ cvMetrics, exifData }) => {
             {/* Shadow Clipping */}
             <div className="bg-slate-50 p-3 rounded-xl border border-gray-100">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">Shadow Clipping</span>
+                <span className="text-xs text-gray-600 font-medium">Shadow Clipping</span>
                 <span className={`font-mono text-xs font-bold ${
-                  cvMetrics.shadowClippingPercent > 5 ? 'text-red-600' : 'text-emerald-600'
+                  cvMetrics.shadowClippingPercent > 5 ? 'text-red-700' : 'text-emerald-700'
                 }`}>
                   {cvMetrics.shadowClippingPercent}%
                 </span>

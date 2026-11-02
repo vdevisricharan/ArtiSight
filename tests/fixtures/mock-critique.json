@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "2.0",
+  "analysisId": "test-analysis-uuid-12345",
+  "image": {
+    "width": 1920,
+    "height": 1280,
+    "aspectRatio": "3:2"
+  },
+  "summary": {
+    "title": "Subtle Natural Light Portrait with Balanced Tonal Harmony",
+    "observations": [
+      "Subject is framed slightly off-center using the left third axis.",
+      "Soft natural directional window lighting from the camera-left side.",
+      "Gentle background bokeh separates subject cleanly from background."
+    ],
+    "strengths": [
+      "Strong subject-to-background separation with intentional shallow depth of field.",
+      "Accurate skin tones and well-preserved highlight textures along cheekbones."
+    ],
+    "improvements": [
+      "Deep shadow clipping on camera-right cheekbone and collar.",
+      "Slight camera shake softness along eyelash boundary."
+    ]
+  },
+  "scores": {
+    "composition": {
+      "value": 8.5,
+      "rationale": "Strong rule-of-thirds alignment with eye level resting directly on the upper grid guide."
+    },
+    "lighting": {
+      "value": 8.0,
+      "rationale": "Pleasant directional wrap-around window light, though shadow fill could be lifted slightly."
+    },
+    "focus": {
+      "value": 7.5,
+      "rationale": "Accurate focal plane on the near iris; minor diffraction softness noticeable at 100% crop."
+    },
+    "color": {
+      "value": 9.0,
+      "rationale": "Natural warm color temperature with neutral white balance and pleasing skin tones."
+    },
+    "storytelling": {
+      "value": 8.0,
+      "rationale": "Pensive, contemplative expression invites emotional engagement from the viewer."
+    },
+    "overall": {
+      "value": 8.2,
+      "rationale": "An accomplished, evocative environmental portrait that succeeds technically and artistically."
+    }
+  },
+  "recommendations": [
+    {
+      "problem": "Aggressive shadow falloff on the unlit side of the subject's face",
+      "evidence": "Shadow detail on camera-right jawline measures near 0 luminance clipping",
+      "why_it_matters": "Harsh unmitigated contrast in portraiture can swallow delicate facial contours",
+      "recommendation": "Use a white foam core or 5-in-1 reflector on the shadow side to bounce gentle fill light",
+      "exercise": "Shoot 5 portraits placing a reflector at 45 degrees, varying distance from 1m to 2m",
+      "expected_outcome": "Mastery of 2:1 and 3:1 lighting contrast ratios in natural portraiture",
+      "learning_topic": "Portrait Lighting"
+    },
+    {
+      "problem": "Marginal eye sharpness due to 1/60s shutter speed handheld",
+      "evidence": "Micro-blur visible along eyelashes when inspecting edge variance",
+      "why_it_matters": "Human eyes require crisp tack-sharp definition to establish the psychological anchor",
+      "recommendation": "Increase minimum shutter speed to at least 1/(2x focal length) or use a monopod",
+      "exercise": "Perform a test burst at 1/125s, 1/250s, and 1/500s while tracking a moving eye target",
+      "expected_outcome": "Consistent 100% hit rate of tack-sharp eye focus in natural ambient shoots",
+      "learning_topic": "Shutter Speed & Sharpness"
+    }
+  ],
+  "learningTopics": [
+    "Portrait Lighting",
+    "Shutter Speed & Sharpness",
+    "Rule of Thirds"
+  ],
+  "cvMetrics": {
+    "sharpnessIndex": 342.8,
+    "sharpnessAssessment": "Crisp subject focus with sharp focal plane",
+    "brightnessMean": 114.2,
+    "contrastRms": 58.7,
+    "highlightClippingPercent": 1.2,
+    "shadowClippingPercent": 3.8,
+    "exposureEvaluation": "Balanced exposure with well-preserved dynamic range",
+    "luminanceHistogram": [
+      2, 4, 8, 15, 22, 35, 48, 62, 75, 88, 92, 85, 76, 68, 59, 52,
+      45, 38, 32, 28, 22, 18, 14, 11, 8, 6, 4, 3, 2, 1, 1, 0
+    ],
+    "dominantColorHex": "#3A4B5C"
+  },
+  "exifData": {
+    "hasExif": true,
+    "cameraMake": "Sony",
+    "cameraModel": "ILCE-7M4",
+    "lensModel": "FE 50mm F1.2 GM",
+    "focalLength": "50.0 mm",
+    "aperture": "f/1.8",
+    "shutterSpeed": "1/160 s",
+    "iso": "200",
+    "captureDate": "2026:10:14 15:42:08"
+  },
+  "resources": [
+    {
+      "title": "Mastering Natural Window Light for Environmental Portraiture",
+      "link": "https://digital-photography-school.com/natural-light-portraiture-guide/",
+      "snippet": "Learn how to control contrast, use reflectors, and balance window illumination for flattering skin tones.",
+      "displayLink": "digital-photography-school.com",
+      "sourceType": "guide",
+      "searchQuery": "Portrait Lighting"
+    },
+    {
+      "title": "Tack-Sharp Focus: Understanding Shutter Speed and Eye AF",
+      "link": "https://photographylife.com/how-to-get-sharp-photos",
+      "snippet": "A deep dive into camera shake, handholding reciprocity rules, and aperture sweet spots for edge-to-edge sharpness.",
+      "displayLink": "photographylife.com",
+      "sourceType": "tutorial",
+      "searchQuery": "Shutter Speed & Sharpness"
+    }
+  ],
+  "metadata": {
+    "model": "gemini-2.5-flash",
+    "processingTimeMs": 12840,
+    "timestamp": "2026-11-02T13:30:00Z",
+    "schemaVersion": "2.0"
+  },
+  "fullCritiqueMarkdown": "# Subtle Natural Light Portrait with Balanced Tonal Harmony\n\n## Overall Assessment\n**Overall Score:** 8.2/10 - An accomplished, evocative environmental portrait that succeeds technically and artistically.\n\n### Key Observations\n- Subject is framed slightly off-center using the left third axis.\n- Soft natural directional window lighting from the camera-left side.\n- Gentle background bokeh separates subject cleanly from background."
+}

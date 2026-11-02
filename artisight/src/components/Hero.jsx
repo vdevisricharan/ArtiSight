@@ -6,7 +6,7 @@ const Hero = () => {
 
   return (
     <section className="mx-4 md:mx-8 lg:mx-20 my-6" aria-labelledby="hero-heading">
-      <div className="rounded-3xl py-20 md:py-28 px-6 sm:px-12 lg:px-20 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white relative overflow-hidden shadow-2xl border border-slate-800">
+      <div className="rounded-3xl py-16 sm:py-20 md:py-28 px-6 sm:px-12 lg:px-20 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white relative overflow-hidden shadow-2xl border border-slate-800">
         {/* Subtle photographic grid background accent */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="w-full h-full border border-white/20 grid grid-cols-3 grid-rows-3"></div>
@@ -33,7 +33,7 @@ const Hero = () => {
             <button
               type="button"
               onClick={() => navigate('/upload')}
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-blue-600 hover:bg-blue-500 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none text-white font-semibold text-sm transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer"
             >
               <Camera size={16} />
               Start Free Photo Critique
@@ -41,31 +41,31 @@ const Hero = () => {
             </button>
             <a
               href="#capabilities"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-slate-200 font-semibold text-sm transition-all border border-white/10"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none text-slate-200 font-semibold text-sm transition-all border border-white/10"
             >
               Explore Evaluation Rubric
             </a>
           </div>
 
-          {/* Key Metric Highlights */}
-          <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-6 text-left">
-            <div>
+          {/* Key Metric Highlights — Responsive grid that stacks comfortably on mobile */}
+          <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+            <div className="bg-slate-900/40 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none border border-slate-800/50 sm:border-0">
               <div className="flex items-center gap-1.5 text-blue-400 text-xs font-semibold mb-1">
                 <Grid size={14} /> 6 Rubric Dimensions
               </div>
-              <span className="text-xs text-slate-400">Composition, Light, Color, Focus, Story</span>
+              <span className="text-xs text-slate-400 block">Composition, Light, Color, Focus, Story</span>
             </div>
-            <div>
+            <div className="bg-slate-900/40 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none border border-slate-800/50 sm:border-0">
               <div className="flex items-center gap-1.5 text-indigo-400 text-xs font-semibold mb-1">
                 <BarChart3 size={14} /> Deterministic CV
               </div>
-              <span className="text-xs text-slate-400">Laplacian Sharpness & Exposure Histograms</span>
+              <span className="text-xs text-slate-400 block">Laplacian Sharpness & Exposure Histograms</span>
             </div>
-            <div>
+            <div className="bg-slate-900/40 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none border border-slate-800/50 sm:border-0">
               <div className="flex items-center gap-1.5 text-amber-400 text-xs font-semibold mb-1">
                 <Sparkles size={14} /> Targeted Practice
               </div>
-              <span className="text-xs text-slate-400">Custom exercises for detected weaknesses</span>
+              <span className="text-xs text-slate-400 block">Custom exercises for detected weaknesses</span>
             </div>
           </div>
         </div>

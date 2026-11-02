@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { List, X, Camera } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef();
+  const menuRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,7 +16,7 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
-  // Close menu when clicking outside
+  // Close menu when clicking outside or pressing Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -37,23 +38,36 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
     closeMenu();
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }, 150);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
+    }
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3.5 w-full flex items-center justify-between px-6 sm:px-12 lg:px-20 shadow-sm transition-all duration-300">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100 py-3.5 w-full flex items-center justify-between px-4 sm:px-10 lg:px-20 shadow-sm transition-all duration-300">
       <div className="text-xl font-bold">
         <Link
           to="/"
-          className="text-gray-900 hover:text-blue-600 transition-all duration-300 flex items-center gap-2 rounded-lg py-1"
-          aria-label="ArtiSight Home"
+          className="text-gray-900 hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all duration-300 flex items-center gap-2 rounded-lg py-1"
         >
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm">
             <Camera className="w-5 h-5 text-white" />
@@ -65,13 +79,13 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="sm:hidden px-2">
+      <div className="sm:hidden px-1">
         <button
           onClick={toggleMenu}
-          className="text-gray-700 rounded-lg p-2 transition-colors duration-200"
+          className="text-gray-700 hover:text-gray-900 p-2.5 rounded-xl transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
-          aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
         >
           {isMenuOpen ? <X size={24} /> : <List size={24} />}
         </button>
@@ -82,30 +96,37 @@ const Navbar = () => {
         id="mobile-menu"
         className={`${
           isMenuOpen ? 'flex' : 'hidden'
-        } absolute top-16 right-4 min-w-[200px] bg-white shadow-xl rounded-2xl border border-gray-100 flex-col items-center sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:min-w-0 sm:border-0 z-50 gap-1 sm:gap-2`}
+        } absolute top-16 right-4 min-w-[220px] bg-white shadow-xl rounded-2xl border border-gray-100 flex-col items-stretch p-3 sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:min-w-0 sm:border-0 z-50 gap-1.5 sm:gap-2`}
         aria-label="Main navigation"
       >
         <button
+          type="button"
           onClick={() => scrollToSection('how-it-works')}
-          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg w-full sm:w-auto text-left sm:text-center"
+          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg text-left sm:text-center"
         >
           How it Works
         </button>
         <button
+          type="button"
           onClick={() => scrollToSection('capabilities')}
-          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg w-full sm:w-auto text-left sm:text-center"
+          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg text-left sm:text-center"
         >
           Capabilities
         </button>
         <button
+          type="button"
           onClick={() => scrollToSection('examples')}
-          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg w-full sm:w-auto text-left sm:text-center"
+          className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-all p-2.5 sm:px-3 text-xs font-semibold rounded-lg text-left sm:text-center"
         >
           Workflow
         </button>
         <button
-          onClick={() => navigate('/upload')}
-          className="ml-2 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition-all"
+          type="button"
+          onClick={() => {
+            closeMenu();
+            navigate('/upload');
+          }}
+          className="sm:ml-2 inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none text-white text-xs font-semibold rounded-full shadow-sm transition-all"
         >
           Analyze Photo
         </button>

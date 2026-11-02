@@ -30,6 +30,7 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
             className="absolute inset-0 w-full h-full pointer-events-none"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
+            aria-hidden="true"
           >
             {/* Rule of Thirds */}
             {overlayMode === 'thirds' && (
@@ -103,11 +104,16 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
       </div>
 
       {/* Overlay Toolbar Controls */}
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2 bg-white/90 backdrop-blur-md p-1.5 rounded-2xl border border-gray-200 shadow-sm">
+      <div
+        className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-gray-200 shadow-sm"
+        role="toolbar"
+        aria-label="Composition guide overlays"
+      >
         <button
           type="button"
           onClick={() => setOverlayMode('none')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+          aria-pressed={overlayMode === 'none'}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:outline-none ${
             overlayMode === 'none'
               ? 'bg-gray-900 text-white shadow-sm'
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -120,9 +126,10 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
         <button
           type="button"
           onClick={() => setOverlayMode('thirds')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+          aria-pressed={overlayMode === 'thirds'}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
             overlayMode === 'thirds'
-              ? 'bg-amber-600 text-white shadow-sm'
+              ? 'bg-slate-900 text-amber-300 border border-amber-500 shadow-sm'
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
           }`}
         >
@@ -133,9 +140,10 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
         <button
           type="button"
           onClick={() => setOverlayMode('phi')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+          aria-pressed={overlayMode === 'phi'}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
             overlayMode === 'phi'
-              ? 'bg-amber-500 text-white shadow-sm'
+              ? 'bg-slate-900 text-amber-300 border border-amber-400 shadow-sm'
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
           }`}
         >
@@ -146,7 +154,8 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
         <button
           type="button"
           onClick={() => setOverlayMode('center')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+          aria-pressed={overlayMode === 'center'}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none ${
             overlayMode === 'center'
               ? 'bg-blue-600 text-white shadow-sm'
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -159,9 +168,10 @@ const CompositionOverlay = ({ imageSrc, altText = 'Photograph preview' }) => {
         <button
           type="button"
           onClick={() => setOverlayMode('diagonals')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+          aria-pressed={overlayMode === 'diagonals'}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all focus-visible:ring-2 focus-visible:ring-pink-600 focus-visible:outline-none ${
             overlayMode === 'diagonals'
-              ? 'bg-pink-600 text-white shadow-sm'
+              ? 'bg-pink-700 text-white shadow-sm'
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
           }`}
         >

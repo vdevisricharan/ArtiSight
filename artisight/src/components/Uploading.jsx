@@ -5,14 +5,13 @@ import axios from 'axios';
 import {
   Upload,
   Image as ImageIcon,
-  CheckCircle2,
   AlertCircle,
   X,
   Sparkles,
   ArrowRight,
   RefreshCw,
-  Sliders,
   ShieldCheck,
+  RotateCcw,
 } from 'lucide-react';
 import {
   setUploadedImage,
@@ -55,7 +54,7 @@ const Uploading = () => {
 
   const fileInputRef = useRef(null);
 
-  // Clean up object URLs
+  // Clean up object URLs on unmount or URL replacement
   useEffect(() => {
     return () => {
       if (previewUrl && previewUrl.startsWith('blob:')) {
@@ -189,6 +188,12 @@ const Uploading = () => {
     } catch (err) {
       if (axios.isCancel(err)) {
         dispatch(setError('Analysis was cancelled.'));
+      } else if (!err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')) {
+        dispatch(
+          setError(
+            'Cannot connect to the ArtiSight analysis backend. Please verify your network connection or ensure the local backend server is running on port 5000 (python run.py).'
+          )
+        );
       } else {
         const errorMsg =
           err.response?.data?.error ||
@@ -213,12 +218,15 @@ const Uploading = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 py-10 px-4 sm:px-6 lg:px-8">
-      {/* Top Breadcrumb */}
-      <div className="max-w-4xl mx-auto mb-8 flex items-center justify-between">
-        <Link to="/" className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1.5">
+      {/* Top Breadcrumb & Privacy Badge */}
+      <div className="max-w-4xl mx-auto mb-8 flex flex-col sm:flex-row gap-2.5 sm:items-center sm:justify-between">
+        <Link
+          to="/"
+          className="text-sm font-semibold text-gray-500 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none rounded-lg p-1 transition-colors flex items-center gap-1.5 w-fit"
+        >
           ← Back to Overview
         </Link>
-        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700 shadow-sm">
+        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700 shadow-sm w-fit">
           <ShieldCheck size={14} className="text-emerald-600" />
           Zero Data Retention • GPS Location Stripped
         </div>
@@ -237,31 +245,58 @@ const Uploading = () => {
           </p>
         </div>
 
-        {/* Error Alert */}
+        {/* Error Alert with Retry Capability */}
         {errorMessage && (
-          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3 text-red-800 text-sm">
-            <AlertCircle size={20} className="shrink-0 mt-0.5 text-red-600" />
-            <div className="flex-1">
-              <strong className="font-semibold block">Upload Notice</strong>
-              <span>{errorMessage}</span>
+          <div
+            className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-red-900 text-sm animate-fade-in"
+            role="alert"
+          >
+            <div className="flex items-start gap-3">
+              <AlertCircle size={20} className="shrink-0 mt-0.5 text-red-600" />
+              <div>
+                <strong className="font-semibold block text-red-950">Upload Notice</strong>
+                <span className="text-xs sm:text-sm text-red-800 leading-relaxed block">{errorMessage}</span>
+              </div>
             </div>
-            <button
-              onClick={() => dispatch(setError(null))}
-              className="text-red-500 hover:text-red-700"
-            >
-              <X size={16} />
-            </button>
+            <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+              {selectedFile && !isProcessing && (
+                <button
+                  type="button"
+                  onClick={handleStartAnalysis}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors"
+                >
+                  <RotateCcw size={12} />
+                  Retry Analysis
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => dispatch(setError(null))}
+                className="text-red-500 hover:text-red-700 p-1 rounded-md"
+                aria-label="Dismiss error notification"
+              >
+                <X size={16} />
+              </button>
+            </div>
           </div>
         )}
 
         {/* Drag and Drop Zone or Preview */}
         {!selectedFile ? (
           <div
+            role="button"
+            tabIndex={0}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-3xl p-10 sm:p-14 text-center cursor-pointer transition-all duration-300 ${
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+            className={`border-2 border-dashed rounded-3xl p-10 sm:p-14 text-center cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
               isDragActive
                 ? 'border-blue-500 bg-blue-50/50 scale-[1.01]'
                 : 'border-gray-200 hover:border-blue-400 hover:bg-slate-50/60'
@@ -285,7 +320,7 @@ const Uploading = () => {
             <p className="text-sm text-gray-500 mb-6">
               or <span className="text-blue-600 font-semibold underline underline-offset-2">browse files</span> from your device
             </p>
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-gray-600 font-medium">
               <span>Supports JPEG, PNG, WebP</span>
               <span>•</span>
               <span>Up to 16 MB</span>
@@ -306,8 +341,9 @@ const Uploading = () => {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full backdrop-blur-sm transition-all"
+                  className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full backdrop-blur-sm transition-all focus:outline-none focus:ring-2 focus:ring-white"
                   title="Remove image"
+                  aria-label="Remove image"
                 >
                   <X size={18} />
                 </button>
@@ -336,13 +372,13 @@ const Uploading = () => {
 
             {/* Processing State & Progress Indicator */}
             {isProcessing && (
-              <div className="p-6 bg-blue-50/70 border border-blue-100 rounded-2xl space-y-3">
+              <div className="p-6 bg-blue-50/70 border border-blue-100 rounded-2xl space-y-3" role="status" aria-live="polite">
                 <div className="flex items-center justify-between text-sm font-semibold text-blue-900">
                   <span className="flex items-center gap-2">
                     <RefreshCw size={16} className="animate-spin text-blue-600" />
                     {phase === 'preparing' && 'Normalizing orientation and optimizing client copy...'}
                     {phase === 'uploading' && `Uploading image (${uploadProgress}%)...`}
-                    {phase === 'analyzing' && 'Running OpenCV metrics & Gemini 2.5 Flash rubric critique...'}
+                    {phase === 'analyzing' && 'Running OpenCV metrics & Gemini 2.5 Flash rubric critique (~10-15s)...'}
                   </span>
                   <span className="font-mono text-xs text-blue-700">
                     {phase === 'uploading' ? `${uploadProgress}%` : 'Processing'}
@@ -365,7 +401,7 @@ const Uploading = () => {
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="text-red-600 hover:text-red-700 font-medium underline"
+                    className="text-red-600 hover:text-red-700 font-medium underline focus-visible:ring-1 focus-visible:ring-red-600"
                   >
                     Cancel
                   </button>
@@ -379,14 +415,14 @@ const Uploading = () => {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+                  className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none transition-colors"
                 >
                   Choose Different Photo
                 </button>
                 <button
                   type="button"
                   onClick={handleStartAnalysis}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg"
                 >
                   <Sparkles size={16} />
                   Analyze with ArtiSight 2.0

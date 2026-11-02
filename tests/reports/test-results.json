@@ -1,0 +1,2802 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\playwright.config.js",
+    "rootDir": "C:/Users/chara/Documents/Projects/ArtiSight/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/chara/Documents/Projects/ArtiSight/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "C:/Users/chara/Documents/Projects/ArtiSight/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium-desktop",
+        "testDir": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\tests\\e2e",
+        "snapshotDir": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "retain-on-failure",
+          "screenshot": "on",
+          "video": "off",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium-desktop"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "tests/reports/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "tests/reports/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run preview --prefix artisight -- --port 5173 --host 127.0.0.1",
+      "url": "http://127.0.0.1:5173",
+      "reuseExistingServer": true,
+      "timeout": 20000
+    }
+  },
+  "suites": [
+    {
+      "title": "accessibility.spec.ts",
+      "file": "accessibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 9: WCAG 2.2 AA Accessibility Testing",
+          "file": "accessibility.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "A11Y-01: Home page satisfies WCAG 2.2 AA rules without serious/critical violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1756,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:46.995Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\accessibility-Phase-9-WCAG-15d0c-serious-critical-violations-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-39f3137c02afdd7589f6",
+              "file": "accessibility.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "A11Y-02: Upload page satisfies WCAG 2.2 AA rules without serious/critical violations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1205,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:48.894Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\accessibility-Phase-9-WCAG-93685-serious-critical-violations-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-7ccf31c11c61d4f3e05b",
+              "file": "accessibility.spec.ts",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "A11Y-03: Critique dashboard satisfies WCAG 2.2 AA rules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2566,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:50.114Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\accessibility-Phase-9-WCAG-875cd-satisfies-WCAG-2-2-AA-rules-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-9a076d671c94a5fd30ea",
+              "file": "accessibility.spec.ts",
+              "line": 36,
+              "column": 3
+            },
+            {
+              "title": "A11Y-04: Keyboard focus navigation and visible focus rings",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 775,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:52.691Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\accessibility-Phase-9-WCAG-928d9-ion-and-visible-focus-rings-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ddd864604af8a6a0198f-5d2dde1f9c62874d22c1",
+              "file": "accessibility.spec.ts",
+              "line": 55,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "analysis.spec.ts",
+      "file": "analysis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 3: AI Analysis Loading Experience",
+          "file": "analysis.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AN-01: Processing phase transitions and loading state verification",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 833,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:53.490Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\analysis-Phase-3-AI-Analys-60192--loading-state-verification-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b34bd8d1c37d1e9436ab-4163e645fb752e0c1b7a",
+              "file": "analysis.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "AN-02: Cancelling an in-flight analysis aborts the request and resets state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 786,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:54.337Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\analysis-Phase-3-AI-Analys-2e68a-he-request-and-resets-state-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b34bd8d1c37d1e9436ab-e0c979d4ca04dc18426a",
+              "file": "analysis.spec.ts",
+              "line": 49,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "critique.spec.ts",
+      "file": "critique.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 4 & 5: Photography Critique Dashboard & Visual Interactions",
+          "file": "critique.spec.ts",
+          "line": 18,
+          "column": 6,
+          "specs": [
+            {
+              "title": "CRIT-01: Empty state shows clear recovery instructions when no critique is active",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 630,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:55.147Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-da9a8--when-no-critique-is-active-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-3fd14ada6e907e4a587b",
+              "file": "critique.spec.ts",
+              "line": 19,
+              "column": 3
+            },
+            {
+              "title": "CRIT-02: Information hierarchy: Overall score, title, and visual observations",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 694,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:55.788Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-bade8-tle-and-visual-observations-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-d1948e8231ea4c9edc1f",
+              "file": "critique.spec.ts",
+              "line": 32,
+              "column": 3
+            },
+            {
+              "title": "CRIT-03: Rubric dimension breakdown displays all 5 category scores with progress bars",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 771,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:56.496Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-dfa08-y-scores-with-progress-bars-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-c246a6547cfd1febf6f3",
+              "file": "critique.spec.ts",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "CRIT-04: Category rationale accordion expands and collapses",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 761,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:57.282Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-a8d98-rdion-expands-and-collapses-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-9def2d1428943f0eb461",
+              "file": "critique.spec.ts",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "CRIT-05: Strengths and Growth Areas cards visually categorize feedback",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 809,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:58.060Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-6894d-isually-categorize-feedback-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-9090a2ec6c0ac031198c",
+              "file": "critique.spec.ts",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "CRIT-06: Interactive composition overlays toggle accurately",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1122,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:15:58.894Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-5d452--overlays-toggle-accurately-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-c3c9ebc79ee4a0f2c67b",
+              "file": "critique.spec.ts",
+              "line": 84,
+              "column": 3
+            },
+            {
+              "title": "CRIT-07: OpenCV technical metrics: 32-bin histogram and clipping gauges render",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 726,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:00.030Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-ed20c--and-clipping-gauges-render-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-24f004be7149f47de018",
+              "file": "critique.spec.ts",
+              "line": 107,
+              "column": 3
+            },
+            {
+              "title": "CRIT-08: Camera EXIF metadata is formatted clearly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 726,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:00.770Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-f32eb-tadata-is-formatted-clearly-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-5821848a4d5ca8034042",
+              "file": "critique.spec.ts",
+              "line": 117,
+              "column": 3
+            },
+            {
+              "title": "CRIT-09: Copy Report copies markdown to clipboard and confirms state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 833,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:01.508Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-c9de8-lipboard-and-confirms-state-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-1288a52c319c0c3560b3",
+              "file": "critique.spec.ts",
+              "line": 128,
+              "column": 3
+            },
+            {
+              "title": "CRIT-10: New Photo button resets state and navigates back to upload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 725,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:02.353Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\critique-Phase-4-5-Photogr-618eb-nd-navigates-back-to-upload-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73d3a38cd34219dc802d-67f5ca587bc8f173089e",
+              "file": "critique.spec.ts",
+              "line": 141,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "error-recovery.spec.ts",
+      "file": "error-recovery.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 10: Error Handling & Recovery UX",
+          "file": "error-recovery.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ERR-01: Simulated network failure displays constructive message and preserves photo for retry",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 759,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:03.104Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\error-recovery-Phase-10-Er-86273-d-preserves-photo-for-retry-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05e0588ec45ef101485c-fea1792d87e83bfe8c74",
+              "file": "error-recovery.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "ERR-02: Backend HTTP 500 error is handled gracefully with error message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 761,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:03.878Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\error-recovery-Phase-10-Er-0a7a2-acefully-with-error-message-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05e0588ec45ef101485c-5c72afc2349c5da19a15",
+              "file": "error-recovery.spec.ts",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "ERR-03: Malformed server response does not crash the UI",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 753,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:04.652Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\error-recovery-Phase-10-Er-e3013-ponse-does-not-crash-the-UI-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05e0588ec45ef101485c-6fd16b6cda514be1d577",
+              "file": "error-recovery.spec.ts",
+              "line": 54,
+              "column": 3
+            },
+            {
+              "title": "ERR-04: Error notification can be dismissed via close button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 837,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:05.423Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\error-recovery-Phase-10-Er-58f28--dismissed-via-close-button-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "05e0588ec45ef101485c-141d62087995486defdc",
+              "file": "error-recovery.spec.ts",
+              "line": 73,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "landing.spec.ts",
+      "file": "landing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 1: First Impression & Landing Page UX",
+          "file": "landing.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "LAND-01: First 5 seconds comprehension — headline, subheadline, and primary CTA are clear",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:06.287Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-54297-e-and-primary-CTA-are-clear-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-f86db083bfad5062bf05",
+              "file": "landing.spec.ts",
+              "line": 9,
+              "column": 3
+            },
+            {
+              "title": "LAND-02: Hero section metrics highlights display key capabilities",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 773,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:07.112Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-03518-ts-display-key-capabilities-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-3889a52b676f87e406b1",
+              "file": "landing.spec.ts",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "LAND-03: Primary CTA navigates user directly to upload workspace",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 608,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:07.897Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-43672-irectly-to-upload-workspace-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-6dc348325f6bf31a85a3",
+              "file": "landing.spec.ts",
+              "line": 40,
+              "column": 3
+            },
+            {
+              "title": "LAND-04: How It Works section presents the 3-step learning journey",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 854,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:08.521Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-dcdf9-the-3-step-learning-journey-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-11411424df67e32a62af",
+              "file": "landing.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "LAND-05: Interactive Workflow visualizer allows step selection and updates preview",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 846,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:09.390Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-f61af-lection-and-updates-preview-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-3673ff76e5a3e10a5758",
+              "file": "landing.spec.ts",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "LAND-06: Capabilities section explains the 6 classical photographic principles",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 778,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:10.249Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-0690f-cal-photographic-principles-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-31d88093b134bb163f84",
+              "file": "landing.spec.ts",
+              "line": 70,
+              "column": 3
+            },
+            {
+              "title": "LAND-07: Footer provides verifiable repository, case study, and privacy details",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 791,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:11.041Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\landing-Phase-1-First-Impr-75471-e-study-and-privacy-details-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4e5b49d369fd48ca0656-9632ea9a3fe9bb7c4a62",
+              "file": "landing.spec.ts",
+              "line": 81,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "navigation.spec.ts",
+      "file": "navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 8: Navigation & Interaction Audit",
+          "file": "navigation.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "NAV-01: Logo link returns to Home page from Upload page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 866,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:11.856Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\navigation-Phase-8-Navigat-3a933--Home-page-from-Upload-page-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-79f838d28d833ce065ab",
+              "file": "navigation.spec.ts",
+              "line": 5,
+              "column": 3
+            },
+            {
+              "title": "NAV-02: Header navigation buttons scroll to their respective sections on Home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 996,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:12.734Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\navigation-Phase-8-Navigat-3fa3c-respective-sections-on-Home-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-5893a692c7642aa5a769",
+              "file": "navigation.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "NAV-03: Header CTA \"Analyze Photo\" navigates to Upload route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 650,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:13.742Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\navigation-Phase-8-Navigat-30036-o-navigates-to-Upload-route-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-c9125168e69873cd44b4",
+              "file": "navigation.spec.ts",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "NAV-04: Mobile menu toggle toggles aria-expanded and displays links on mobile",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 748,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:14.409Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\navigation-Phase-8-Navigat-2412c-nd-displays-links-on-mobile-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-c1e6489158f00bbab6f0",
+              "file": "navigation.spec.ts",
+              "line": 30,
+              "column": 3
+            },
+            {
+              "title": "NAV-05: Unknown routes render a helpful 404 error page with link back to Home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 621,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:15.173Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\navigation-Phase-8-Navigat-1b748-page-with-link-back-to-Home-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d2868f7d23420c27cca-eafb01558fb02588cb78",
+              "file": "navigation.spec.ts",
+              "line": 47,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "recommendations.spec.ts",
+      "file": "recommendations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 6: Learning Recommendations UX",
+          "file": "recommendations.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "REC-01: Practice assignments present actionable shooting exercises and target skill outcomes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 759,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:15.819Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\recommendations-Phase-6-Le-ee2e5-s-and-target-skill-outcomes-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0653e77a13219686089d-9c5aded53d1673d5a824",
+              "file": "recommendations.spec.ts",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "REC-02: Learning topic badges categorize exercises clearly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 693,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:16.595Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\recommendations-Phase-6-Le-8b2e0-ategorize-exercises-clearly-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0653e77a13219686089d-085019ef17627b3193e1",
+              "file": "recommendations.spec.ts",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "REC-03: Educational guide cards have valid links, domain labels, and open in new tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:17.302Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\recommendations-Phase-6-Le-7cf5f--labels-and-open-in-new-tab-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0653e77a13219686089d-5a8b7f78feca6ebf6697",
+              "file": "recommendations.spec.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "REC-04: Visual validation screenshots of improved sections",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1282,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:18.079Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\recommendations-Phase-6-Le-8bde8-nshots-of-improved-sections-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0653e77a13219686089d-bdbe9274d4d12d3ab81f",
+              "file": "recommendations.spec.ts",
+              "line": 59,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "responsive.spec.ts",
+      "file": "responsive.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 7: Mobile-First Responsive Testing Matrix",
+          "file": "responsive.spec.ts",
+          "line": 20,
+          "column": 6,
+          "specs": [
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Small mobile (320x568)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 621,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:19.393Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--cdeaf-me-at-Small-mobile-320x568--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-2b65f63746fa6b316660",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Small mobile (320x568)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 587,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:20.029Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--3d410-ad-at-Small-mobile-320x568--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-379af5c9a42758ea43ee",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Standard mobile (375x667)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 647,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:20.632Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--d94f5-at-Standard-mobile-375x667--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-ed8d73695fc9fb8a7e1f",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Standard mobile (375x667)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 578,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:21.295Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--4507b-at-Standard-mobile-375x667--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-e9313b69c2099496c798",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Modern mobile (390x844)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 633,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:21.887Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--b1049-e-at-Modern-mobile-390x844--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-d6af2c453a1c583e260e",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Modern mobile (390x844)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 561,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:22.532Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--5b56e-d-at-Modern-mobile-390x844--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-1a1d9c178a00e4e7dcb1",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Large mobile (430x932)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 742,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:23.105Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--1f430-me-at-Large-mobile-430x932--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-dc5fda59d8776a320476",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Large mobile (430x932)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 992,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:23.865Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--34fee-ad-at-Large-mobile-430x932--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-fa395156322645ab483e",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Tablet portrait (768x1024)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 762,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:24.873Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--0fb48-t-Tablet-portrait-768x1024--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-82e3e5454f15e647f147",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Tablet portrait (768x1024)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 920,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:25.646Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--6bb58-t-Tablet-portrait-768x1024--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-b499e1f68bb519299dfd",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Tablet landscape (1024x768)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 733,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:26.577Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--c69a0--Tablet-landscape-1024x768--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-d682dfe773d3a6fbe811",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Tablet landscape (1024x768)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 625,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:27.322Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--55bd3--Tablet-landscape-1024x768--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-0a8b02aec778888ed1af",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Laptop (1366x768)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 816,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:27.958Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--310de-on-Home-at-Laptop-1366x768--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-ef3e9806b81d195ce5f3",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Laptop (1366x768)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 620,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:28.787Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--e1846--Upload-at-Laptop-1366x768--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-6454f88e1d3e2d7791b5",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Desktop (1440x900)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:29.419Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--2c377-n-Home-at-Desktop-1440x900--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-1cff7b50a1c1202ef07f",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Desktop (1440x900)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 586,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:30.244Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--d9263-Upload-at-Desktop-1440x900--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-053eac5d747650fa782d",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-01: No horizontal overflow on Home at Large desktop (1920x1080)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1326,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:30.845Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--97b33-at-Large-desktop-1920x1080--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-d0f5cdd49533aa1de3a0",
+              "file": "responsive.spec.ts",
+              "line": 22,
+              "column": 5
+            },
+            {
+              "title": "RESP-02: No horizontal overflow on Upload at Large desktop (1920x1080)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 716,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:32.186Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--4d834-at-Large-desktop-1920x1080--chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-83fa88faa7aecdbfda78",
+              "file": "responsive.spec.ts",
+              "line": 32,
+              "column": 5
+            },
+            {
+              "title": "RESP-03: Hero metric cards do not clip text on 320px small mobile",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 710,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:32.915Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--ecbcf--text-on-320px-small-mobile-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-9a4b0c4138f004dc8ee6",
+              "file": "responsive.spec.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "RESP-04: Feedback dashboard reflows into single column on mobile",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 693,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:33.636Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\responsive-Phase-7-Mobile--6f5e3-nto-single-column-on-mobile-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0223b006feb3d306446-8cf9de493bec753cbcce",
+              "file": "responsive.spec.ts",
+              "line": 59,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "upload.spec.ts",
+      "file": "upload.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Phase 2: Photograph Upload Experience",
+          "file": "upload.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "UPLOAD-01 & 05: Select a valid JPEG via file input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 702,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:34.349Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--8d8c7-a-valid-JPEG-via-file-input-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-2c3f24259714854c065f",
+              "file": "upload.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-02: Select a valid PNG image and check metadata",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 730,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:35.066Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--093b8-NG-image-and-check-metadata-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-44c642ce206f50157369",
+              "file": "upload.spec.ts",
+              "line": 34,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-03: Select a valid WebP image",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 639,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:35.811Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--7d646-3-Select-a-valid-WebP-image-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-af7bce4717097eabaadd",
+              "file": "upload.spec.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-06: Attempt unsupported file format (.txt) shows clear error notice",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 655,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:36.464Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--01c25-xt-shows-clear-error-notice-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-7bab345f5fe81c946e65",
+              "file": "upload.spec.ts",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-07: Attempt oversized image (>16MB) shows maximum file size alert",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 684,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:37.139Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--17498-ows-maximum-file-size-alert-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-c6df6e1df4cdb735f629",
+              "file": "upload.spec.ts",
+              "line": 65,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-09: Replace or remove selected image restores dropzone",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 716,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:37.840Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--abf23-ted-image-restores-dropzone-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-d521497593c309b57f29",
+              "file": "upload.spec.ts",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "UPLOAD-10: Dropzone accessibility — keyboard focusable and activatable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desktop",
+                  "projectName": "chromium-desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 676,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-02T09:16:38.570Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\chara\\Documents\\Projects\\ArtiSight\\test-results\\upload-Phase-2-Photograph--4e861-d-focusable-and-activatable-chromium-desktop\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "64f97298e5aac3754605-32bedde33b3c7f0b5f19",
+              "file": "upload.spec.ts",
+              "line": 89,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T09:15:43.828Z",
+    "duration": 56177.891,
+    "expected": 63,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

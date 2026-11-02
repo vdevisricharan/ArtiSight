@@ -7,21 +7,19 @@ import {
 } from '../redux/imageSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Sparkles,
   Award,
   CheckCircle2,
   AlertTriangle,
-  BookOpen,
   Copy,
   Printer,
   Upload,
-  ExternalLink,
   ChevronDown,
   ChevronUp,
-  Share2,
 } from 'lucide-react';
 import CompositionOverlay from './CompositionOverlay';
 import TechnicalAnalysisPanel from './TechnicalAnalysisPanel';
+import PersonalizedPracticeSection from './PersonalizedPracticeSection';
+import CuratedResourcesSection from './CuratedResourcesSection';
 
 const Feedback = () => {
   const dispatch = useDispatch();
@@ -57,17 +55,20 @@ const Feedback = () => {
   if (!uploadedImage || !analysisResult) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
-        <div className="text-center max-w-md bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
-          <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+        <div className="text-center max-w-md bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-100">
+          <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-6 mx-auto shadow-sm border border-blue-100">
             <Upload size={32} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">No Active Photo Critique</h2>
-          <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+          <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-2">
+            Workspace Ready
+          </span>
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">No Active Photo Critique</h1>
+          <p className="text-gray-600 mb-8 text-sm leading-relaxed">
             Upload your photograph to generate an explainable AI critique, OpenCV technical metrics, and hands-on photography assignments.
           </p>
           <Link
             to="/upload"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all shadow-md hover:shadow-lg"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg w-full sm:w-auto"
           >
             Start New Critique
           </Link>
@@ -97,47 +98,46 @@ const Feedback = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 antialiased pb-20 print:bg-white print:p-0">
-      {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/80 px-6 py-3.5 print:hidden">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link to="/" className="text-lg font-bold text-gray-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-blue-600" />
-              ArtiSight <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">2.0</span>
-            </Link>
-            <span className="text-gray-300">|</span>
-            <span className="text-xs text-gray-500 font-medium truncate max-w-xs">
-              {summary?.title || 'Photography Critique'}
+      {/* Streamlined Workspace Action Bar (Single Clean Navigation Bar beneath Navbar) */}
+      <div className="sticky top-14 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 px-4 sm:px-8 py-3 print:hidden shadow-xs">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 overflow-hidden">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 shrink-0">
+              Critique Session:
+            </span>
+            <span className="text-xs font-semibold text-gray-800 truncate">
+              {summary?.title || 'Photographic Analysis'}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
             <button
+              type="button"
               onClick={handleCopyReport}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
-              title="Copy markdown critique"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-colors"
             >
-              <Copy size={14} />
-              {copied ? 'Copied!' : 'Copy Report'}
+              <Copy size={13} />
+              <span>{copied ? 'Copied!' : 'Copy Report'}</span>
             </button>
             <button
+              type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
-              title="Print / Save PDF"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-colors"
             >
-              <Printer size={14} />
-              Print / PDF
+              <Printer size={13} />
+              <span>Print / PDF</span>
             </button>
             <button
+              type="button"
               onClick={handleNewPhoto}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none transition-colors shadow-xs"
             >
-              <Upload size={14} />
-              New Photo
+              <Upload size={13} />
+              <span>New Photo</span>
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Workspace Layout */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -211,23 +211,35 @@ const Feedback = () => {
               )}
             </div>
 
-            {/* Rubric Category Scores */}
+            {/* Rubric Category Scores (Accessible Accordions) */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
-              <h2 className="text-base font-bold text-gray-900 mb-4 uppercase tracking-wide text-xs">
-                Rubric Dimension Breakdown
-              </h2>
-              <div className="space-y-3.5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-gray-900 uppercase tracking-wide text-xs">
+                  Rubric Dimension Breakdown
+                </h2>
+                <span className="text-[11px] text-gray-600 font-medium">Click any row to expand rationale</span>
+              </div>
+
+              <div className="space-y-3.5" role="region" aria-label="Rubric score dimensions">
                 {scoreCategories.map(({ key, label, data, color }) => {
                   const isExpanded = expandedScore === key;
                   return (
                     <div
                       key={key}
-                      className="border border-gray-100 rounded-2xl p-3.5 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                      data-testid={`dimension-${key}`}
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isExpanded}
+                      onClick={() => toggleScoreRationale(key)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          toggleScoreRationale(key);
+                        }
+                      }}
+                      className="border border-gray-100 rounded-2xl p-3.5 bg-slate-50/50 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none transition-colors cursor-pointer select-none"
                     >
-                      <div
-                        onClick={() => toggleScoreRationale(key)}
-                        className="flex items-center justify-between cursor-pointer select-none"
-                      >
+                      <div className="flex items-center justify-between">
                         <div className="flex-1 mr-4">
                           <div className="flex items-center justify-between mb-1.5">
                             <span className="font-semibold text-gray-800 text-sm">{label}</span>
@@ -243,18 +255,14 @@ const Feedback = () => {
                             />
                           </div>
                         </div>
-                        <button
-                          type="button"
-                          className="p-1 text-gray-400 hover:text-gray-700 transition-colors"
-                          aria-label={`Toggle ${label} rationale`}
-                        >
+                        <div className="p-1 text-gray-400">
                           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                        </button>
+                        </div>
                       </div>
 
                       {/* Expandable rationale */}
                       {isExpanded && (
-                        <p className="mt-3 text-xs text-gray-600 leading-relaxed border-t border-gray-200/60 pt-2.5">
+                        <p className="mt-3 text-xs text-gray-600 leading-relaxed border-t border-gray-200/60 pt-2.5 animate-fade-in">
                           {data?.rationale}
                         </p>
                       )}
@@ -264,7 +272,7 @@ const Feedback = () => {
               </div>
             </div>
 
-            {/* Strengths & Improvements Grid */}
+            {/* Strengths & Improvements Grid with 30-Second Priority Calling */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Strengths */}
               <div className="bg-emerald-50/60 rounded-3xl p-6 border border-emerald-200/60 shadow-sm">
@@ -282,16 +290,29 @@ const Feedback = () => {
                 </ul>
               </div>
 
-              {/* Improvements */}
+              {/* Improvements with Priority Hierarchy */}
               <div className="bg-amber-50/60 rounded-3xl p-6 border border-amber-200/60 shadow-sm">
-                <div className="flex items-center gap-2 mb-3 text-amber-800">
-                  <AlertTriangle size={18} className="shrink-0" />
-                  <h3 className="font-bold text-sm tracking-wide uppercase">Growth Areas</h3>
+                <div className="flex items-center justify-between mb-3 text-amber-800">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle size={18} className="shrink-0" />
+                    <h3 className="font-bold text-sm tracking-wide uppercase">Growth Areas</h3>
+                  </div>
+                  <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                    Priority Focus
+                  </span>
                 </div>
-                <ul className="space-y-2 text-xs text-amber-950 leading-relaxed">
+                <ul className="space-y-2.5 text-xs text-amber-950 leading-relaxed">
                   {summary?.improvements?.map((imp, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0 mt-1.5" />
+                      <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${
+                        idx === 0
+                          ? 'bg-amber-900 text-white'
+                          : idx === 1
+                          ? 'bg-amber-800 text-white'
+                          : 'bg-amber-200 text-amber-950'
+                      }`}>
+                        #{idx + 1}
+                      </span>
                       <span>{imp}</span>
                     </li>
                   ))}
@@ -300,106 +321,10 @@ const Feedback = () => {
             </div>
 
             {/* Hands-On Practice Exercises */}
-            {recommendations && recommendations.length > 0 && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
-                <div className="flex items-center gap-2 mb-5">
-                  <Award className="w-5 h-5 text-indigo-600" />
-                  <h2 className="text-base font-bold text-gray-900 tracking-wide uppercase text-xs">
-                    Personalized Practice Assignments
-                  </h2>
-                </div>
-
-                <div className="space-y-4">
-                  {recommendations.map((rec, idx) => (
-                    <div
-                      key={idx}
-                      className="border border-indigo-100 rounded-2xl p-5 bg-gradient-to-br from-indigo-50/40 via-white to-blue-50/20"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">
-                          {rec.learning_topic || 'Practice'}
-                        </span>
-                        <span className="text-xs font-semibold text-gray-400">Exercise #{idx + 1}</span>
-                      </div>
-
-                      <h4 className="font-bold text-gray-900 text-sm mb-2">{rec.problem}</h4>
-                      <p className="text-xs text-gray-600 mb-3 italic">
-                        <strong>Evidence:</strong> {rec.evidence}
-                      </p>
-
-                      <div className="bg-white/80 p-3.5 rounded-xl border border-indigo-100/70 mb-3 text-xs space-y-2 text-gray-700">
-                        <div>
-                          <strong className="text-indigo-950 block mb-0.5">Recommended Adjustment:</strong>
-                          {rec.recommendation}
-                        </div>
-                        <div>
-                          <strong className="text-indigo-950 block mb-0.5">Shooting Assignment:</strong>
-                          <span className="font-medium text-indigo-900">{rec.exercise}</span>
-                        </div>
-                      </div>
-
-                      <div className="text-[11px] text-gray-500 font-medium">
-                        <strong>Target Skill Outcome:</strong> {rec.expected_outcome}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <PersonalizedPracticeSection recommendations={recommendations} />
 
             {/* Curated & Discovered Learning Resources */}
-            {resources && resources.length > 0 && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200/80">
-                <div className="flex items-center gap-2 mb-5">
-                  <BookOpen className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <h2 className="text-base font-bold text-gray-900 tracking-wide uppercase text-xs">
-                      Curated Educational Resources
-                    </h2>
-                    <p className="text-xs text-gray-500">
-                      Verified photography guides and tutorials tailored to your weaknesses
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {resources.map((res, idx) => (
-                    <a
-                      key={idx}
-                      href={res.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex flex-col justify-between p-4 rounded-2xl border border-gray-200/80 hover:border-blue-500 hover:shadow-md transition-all bg-white"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between text-xs text-blue-600 font-semibold mb-2">
-                          <span className="uppercase tracking-wider text-[10px] px-2 py-0.5 rounded bg-blue-50">
-                            {res.sourceType || 'Guide'}
-                          </span>
-                          <span className="text-gray-400 group-hover:text-blue-500 transition-colors flex items-center gap-1">
-                            {res.displayLink}
-                            <ExternalLink size={12} />
-                          </span>
-                        </div>
-                        <h4 className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors line-clamp-2 mb-1.5">
-                          {res.title}
-                        </h4>
-                        <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed">
-                          {res.snippet}
-                        </p>
-                      </div>
-
-                      <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
-                        <span>{res.searchQuery ? `Topic: ${res.searchQuery}` : 'Resource'}</span>
-                        <span className="font-semibold text-blue-600 group-hover:translate-x-0.5 transition-transform">
-                          Read Guide →
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
+            <CuratedResourcesSection resources={resources} />
           </div>
         </div>
       </main>
